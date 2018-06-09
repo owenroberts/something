@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>lostly -- calendar</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <style type="text/css">
+  
+  
+  
+  #container {
+    padding:50px 0;
+    padding-top:64px;
+    width:100%;
+    overflow:hidden;
+  }
+  
+  img {
+    width:100%;
+    margin-top:-10px;
+  } 
+    
+  #header {
+    width:100%;
+    position:fixed;
+    z-index:1;
+    padding-top:14px;
+    background:white;
+  }
+  .month {
+    width:100%;
+    position:relative;
+  }
+    .target {
+      position:absolute;
+/*
+      background-color:rgba(255,0,0,0.5);
+*/
+    }
+    
+    #day {
+      width:100%;
+      padding-top:10px;
+      position:fixed;
+      overflow:scroll;
+      top:40px; 
+      left:100%;  
+      z-index:1;
+      min-height:100%;
+      background-color:white;
+      
+    }
+     
+    #day img {
+      float:left;
+    }
+    #block {
+      width:100%;
+      height:30px;
+      position:fixed;
+      background:white;
+      opacity:0.9;
+      z-index:9;
+    }
+    
+  
+
+  </style>
+  
+</head>
+<body>
+  
+  <div id="home" onclick='location.href="home.html"'></div>
+  <div id="header"><img src="img/calendar/header.jpg" />
+    </div>
+  <div id="container">
+    <div class="month">
+      <img src="img/calendar/jan2013.jpg">
+      <div class="target" id="jan4" style="top:13%;height:15%;left:72%;width:12%;"></div>
+      <div class="target" id="jan7" style="top:29%;height:15%;left:16%;width:12%;"></div>
+      <div class="target" id="jan18" style="top:44%;left:74%;height:15%;width:12%;"></div>
+    </div>
+    <div class="month">
+      <img src="img/calendar/feb2013.jpg" >
+      <div class="target" id="feb2" style="top:13%;left:88%;height:15%;width:10%;"></div>
+      <div class="target" id="feb10" style="top:50%;left:3%;height:15%;width:10%;"></div>
+      <div class="target" id="feb21" style="top:60%;left:61%;height:15%;width:10%;"></div>
+    </div>
+    
+    <div class="month">
+      <img src="img/calendar/march2013.jpg" >
+      <div class="target" id="mar15" style="top:38%;left:72%;height:15%;width:10%;"></div>
+      <div class="target" id="mar17" style="top:58%;left:4%;height:15%;width:10%;"></div>
+      <div class="target" id="mar23" style="top:53%;left:86%;height:15%;width:10%;"></div>
+      <div class="target" id="mar29" style="top:65%;left:74%;height:15%;width:10%;"></div>
+      
+    </div>
+    
+    <div class="month" >
+      <img src="img/calendar/april2013.jpg" >
+      <div class="target" id="april6" style="top:8%;left:85%;height:15%;width:10%;"></div>
+      <div class="target" id="april17" style="top:40%;left:45%;height:15%;width:10%;"></div>
+      <div class="target" id="april30" style="top:73%;left:30%;height:15%;width:10%;"></div>
+    </div>
+    
+    <div class="month">
+      <img src="img/calendar/may2013.jpg" >
+      <div class="target" id="may4" style="top:13%;left:90%;height:15%;width:10%;"></div>
+      <div class="target" id="may11" style="top:29%;left:90%;height:15%;width:10%;"></div>
+      <div class="target" id="may24" style="top:56%;left:77%;height:15%;width:10%;"></div>
+    </div>
+    <div class="month" >
+      <img src="img/calendar/june2013.jpg" >
+      <div class="target" id="june6" style="top:21%;left:63%;height:15%;width:10%;"></div>
+      <div class="target" id="june7" style="top:21%;left:77%;height:15%;width:10%;"></div>
+      <div class="target" id="june8" style="top:21%;left:89%;height:15%;width:10%;"></div>
+      <div class="target" id="june30" style="top:82%;left:3%;height:15%;width:10%;"></div>
+    </div>
+    <div class="month" >
+      <img src="img/calendar/july2013.jpg"    alt="July2013">
+      <div class="target" id="july31" style="top:76%;left:46%;height:15%;width:10%;"></div>
+    </div>
+    
+    <div class="month" id="jan">
+      <img src="img/calendar/august2013.jpg"  >
+      <div class="target" id="august1" style="top:11%;left:62%;height:15%;width:10%;"></div>
+      <div class="target" id="august26" style="top:80%;left:15%;height:15%;width:10%;"></div>
+      <div class="target" id="august30" style="top:80%;left:78%;height:15%;width:10%;"></div>
+      
+    </div>
+    
+    
+    
+    <div class="month" >
+      <img src="img/calendar/sept2013.jpg" alt="September2013">
+      <div class="target" id="sept11" style="top:24%;left:46%;height:15%;width:10%;"></div>      
+      <div class="target" id="sept13" style="top:22%;left:76%;height:15%;width:10%;"></div>      
+    </div>
+    
+    <div class="month">
+      <img src="img/calendar/oct2013.jpg" alt="October2013">
+      <div class="target" id="oct13" style="top:47%;left:2%;height:15%;width:10%;"></div>      
+      <div class="target" id="oct14" style="top:47%;left:20%;height:15%;width:10%;"></div>
+      <div class="target" id="oct20" style="top:65%;left:1%;height:15%;width:10%;"></div>      
+      <div class="target" id="oct22" style="top:65%;left:33%;height:15%;width:10%;"></div>
+    </div>
+    
+    <div class="month" >
+      <img src="img/calendar/nov2013.jpg" alt="November2013">
+      <div class="target" id="nov7" style="top:30%;left:61%;height:15%;width:10%;"></div>      
+      <div class="target" id="nov22" style="top:67%;left:76%;height:15%;width:10%;"></div>
+      <div class="target" id="nov24" style="top:81%;left:3%;height:15%;width:10%;"></div>
+    </div>
+    
+    <div class="month" id="jan14">
+      <img src="img/calendar/dec2013.jpg" />
+      <div class="target" id="dec7" style="top:3%;height:18%;left:88%;width:15%;"></div>
+      <div class="target" id="dec11" style="top:23%;height:18%;left:44%;width:15%;"></div>
+      <div class="target" id="dec26" style="top:60%;height:18%;left:58%;width:15%;"></div>
+    </div>
+    
+    <div class="month"   >
+      <img src="img/calendar/jan2014.jpg" />
+      <div class="target" id="jan9" style="top:26%;height:18%;left:62%;width:15%;"></div>
+      <div class="target" id="jan13" style="top:44%;height:18%;left:18%;width:15%;"></div>
+      <div class="target" id="jan31" style="top:73%;height:18%;left:75%;width:15%;"></div>
+    </div>
+    
+    <div class="month">
+      <img src="img/calendar/feb2014.jpg"  alt="February2014">
+      
+    </div>
+    
+    <div class="month" >
+      <img src="img/calendar/febs1.jpg"  >
+      <div class="target" id="febs1-7" style="top:56%;left:72%;height:40%;width:15%;"></div>
+      
+    </div>
+    <div class="month">
+      <img src="img/calendar/febs2.jpg"  >
+      <div class="target" id="febs2-6" style="top:26%;left:60%;height:15%;width:10%;"></div>      
+      <div class="target" id="febs2-9" style="top:44%;left:1%;height:15%;width:10%;"></div>      
+      <div class="target" id="febs2-31" style="top:84%;left:17%;height:15%;width:10%;"></div>      
+    </div>
+    <div class="month" >
+      <img src="img/calendar/febs3.jpg"  >
+      <div class="target" id="febs3-3" style="top:16%;left:55%;height:15%;width:10%;"></div>      
+    </div>
+    <div class="month">
+      <img src="img/calendar/febs4.jpg"  >
+      <div class="target" id="febs4-14" style="top:48%;left:17%;height:15%;width:10%;"></div>      
+      <div class="target" id="febs4-15" style="top:48%;left:30%;height:15%;width:10%;"></div>      
+      <div class="target" id="febs4-16" style="top:47%;left:45%;height:15%;width:10%;"></div>      
+      <div class="target" id="febs4-17" style="top:46%;left:60%;height:15%;width:10%;"></div>      
+      <div class="target" id="febs4-18" style="top:46%;left:72%;height:15%;width:10%;"></div>      
+      <div class="target" id="febs4-19" style="top:46%;left:85%;height:15%;width:10%;"></div>      
+      
+    </div>
+    <div class="month" > 
+      <img src="img/calendar/febs5.jpg"  >
+      <div class="target" id="febs5-13" style="top:28%;left:20%;height:8%;width:10%;"></div>      
+      
+    </div>
+    <div class="month">
+      <img src="img/calendar/febs6.jpg"  >
+      <div class="target" id="febs6-79" style="top:54%;left:61%;height:15%;width:10%;">
+    </div>      
+      
+    </div>
+    <div class="month">
+      <img src="img/calendar/febs7.jpg"  >
+      <div class="target" id="febs7-11" style="top:28%;left:61%;height:15%;width:10%;"></div> 
+      <div class="target" id="febs7-14" style="top:47%;left:2%;height:15%;width:10%;"></div> 
+      <div class="target" id="febs7-31" style="top:79%;left:42%;height:15%;width:10%;"></div> 
+    </div>
+    <div class="month">
+      <img src="img/calendar/febs8.jpg"  >
+    </div>
+    <div class="month" >
+      <img src="img/calendar/febs9.jpg"  >
+      <div class="target" id="febs9-14" style="top:30%;left:86%;height:60%;width:10%;"></div>      
+      
+    </div>
+    <div class="month">
+      <img src="img/calendar/febs10.jpg"  >
+      <div class="target" id="febs9-13" style="top:51%;left:76%;height:40%;width:10%;"></div>      
+      
+    </div>
+    
+    
+  
+  </div>
+  <div id="day">
+    
+    <img id="day-img" src="img/calendar/jan31.png" />
+   
+  </div>
+  <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/jquery.mobile-1.4.0.min.js" type="text/javascript" charset="utf-8"></script>
+  
+  <script src="js/fastclick.js" type="text/javascript" charset="utf-8"></script>
+  
+  <script type="text/javascript">
+  
+  function shouldRotateToOrientation(orientation) {
+    switch (orientation) {
+            //Portrait or PortraitUpsideDown
+            case 0:
+            case 180:
+                return true;
+            //LandscapeRight or LandscapeLeft
+            case 90:
+            case -90:
+                 return false;
+        }
+  }
+  setTimeout(function(){
+    shouldRotateToOrientation(orientation)
+  }, 0);
+  
+  $(document).ready( function(){
+    
+    $(function() {
+        FastClick.attach(document.body);
+    });
+    $('.ui-loader').css('display', 'none');
+    $('.ui-page').css('min-height','0');
+    $('a').attr('data-ajax', 'false');
+    
+    // scroll to january 2014
+    
+    $("html, body").animate({ scrollTop: $('#jan14').offset().top}, 400);
+     
+   // when red date is clicked, animate the calendar image for that day
+   $('.target').click( function() {
+     var d = $(this).attr('id'); // get the id of the target, corresponds to img name
+     $('#day-img').attr('src', "img/calendar/"+d+".jpg"); // populates image src
+     $('#day')/*.css('top', $(window).scrollTop()+10+'px')*/.animate({
+       left:0
+     }, 400);
+    });
+    
+    // return day div to hidden
+    $('#day').on("swiperight", function(){
+      $(this).animate({
+        left:"100%"
+      }, 300);
+      // return body to scroll   
+    });
+    
+    /*var level = parseInt(localStorage.getItem('gamestate'));
+    if (level == 4 && localStorage.getItem(level) == "red") {
+      localStorage["nextLevel"] = true;
+    }*/
+    localStorage["appCount"]++;
+      
+  });
+
+  </script>
+  
+</body>

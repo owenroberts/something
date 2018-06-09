@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <style type="text/css">
+
+    #container {
+      background:black;
+      margin:0 auto;
+      margin-top:124px;
+      
+      
+    }
+     
+    @media screen and (orientation:landscape) {
+      #container {
+        margin-top:20px;
+         }
+    }
+
+
+   
+    </style>
+    
+    <title>lostly -- photos</title>    
+    
+    <script src="cordova.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+         
+    
+          //generate random nums
+        	var getRand = function(n) {
+        		var rand = Math.floor(Math.random() * n);
+        		return rand;
+        	};
+        
+          // list of images to superimpose on camera shots (skeletons)
+          var skels = [
+            "img/camera/s1.png",
+            "img/camera/s2.png",
+            "img/camera/s3.png",
+            "img/camera/s4.png",
+            "img/camera/s5.png",
+            "img/camera/s6.png",
+            "img/camera/s7.png",
+            "img/camera/s8.png",
+            "img/camera/s9.png",
+            "img/camera/s10.png"
+          ];
+
+          var pictureSource;   // picture source
+          var destinationType; // sets the format of returned value
+
+          document.addEventListener("deviceready",onDeviceReady,false);
+
+
+
+          function onDeviceReady() {
+              console.log('device ready')
+              pictureSource=navigator.camera.PictureSourceType;
+              destinationType=navigator.camera.DestinationType;
+          }
+        
+          // get canvas and save as image (uses  plugin)
+          function capCanvas() {    
+            window.canvas2ImagePlugin.saveImageDataToLibrary(
+                 function(msg){
+                  console.log(msg);
+                 },
+                 function(err){
+                     console.log(err);
+                 },
+                 document.getElementById('myCanvas')
+             );
+           }
+
+           //when image data is received, add img to the canvas, choose random skeleton image, add that, then save both as image
+           function onPhotoDataSuccess(imageData) { 
+             canvasImg("data:image/png;base64," + imageData); 
+             var sk = getRand(skels.length);
+             setTimeout(function(){canvasImg(skels[sk]);}, 80); 
+           }       
+           // function to add images to the canvas using url (works with data)
+          function canvasImg(url) {
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            ctx.webkitImageSmoothingEnabled = true;
+            var imageObj = new Image();
+            imageObj.onload = function() {
+              ctx.drawImage(imageObj, parseInt(0), parseInt(0), 320, 320);
+            };
+            imageObj.src = url;
+            setTimeout(function(){capCanvas();}, 500);
+          }
+
+        
+          function capturePhotoEdit() {
+            // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
+            navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50, allowEdit: true,
+              destinationType: destinationType.DATA_URL });
+          }
+    
+
+          // Called if something bad happens.
+          function onFail(message) {
+            //alert('Failed because: ' + message);
+          }
+          
+          localStorage["appCount"]++;
+       </script>
+        
+        
+</head>
+
+<body data-role="none" onload="setTimeout(function(){capturePhotoEdit();}, 300);">
+  <div id="home" onclick='location.href="home.html"'></div>
+  <div id="container" style="width:320px;height:320px;">
+    <canvas id="myCanvas" width="320" height="320"></canvas>
+  </div>  
+</body>

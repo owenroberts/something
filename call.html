@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <style type="text/css">
+
+    #splash {
+      text-align:center;
+      opacity:0;
+    }
+
+    #call-from {
+      margin:120px 0;
+      width:300px;
+    }
+    #end {
+      margin:80px 40px;
+      width:60px;
+    }
+    #pickup {
+      margin:80px 40px;
+      width:60px;
+    }
+    #pic {
+      display:none;
+      margin:40px 0;
+    }
+
+    </style>
+    
+    <title>lostly</title>
+        
+</head>
+
+<body style="background:black">
+  <div id="splash" style="background:black">
+      <img id="call-from" src="img/call/call-from.png"  alt="Call From">
+      <img id="pic" src="img/call/snow.png">
+      <img id="end" src="img/call/end.png" alt="End">
+      <img id="pickup" src="img/call/pickup.png" alt="Pickup">
+  </div>
+  <audio id="ring" >
+    <source src="audio/ring.mp3" type="audio/mpeg" />
+  </audio>
+  <audio id="snow" >
+    <source src="audio/snow.mp3" type="audio/mpeg" />
+  </audio>
+  
+
+
+  <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/fastclick.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+  function shouldRotateToOrientation(orientation) {
+    switch (orientation) {
+            //Portrait or PortraitUpsideDown
+            case 0:
+            case 180:
+                return true;
+            //LandscapeRight or LandscapeLeft
+            case 90:
+            case -90:
+                 return false;
+        }
+  }
+  setTimeout(function(){
+    shouldRotateToOrientation(orientation)
+  }, 0);
+  
+  $(document).ready( function() {
+    
+    $(function() {
+        FastClick.attach(document.body);
+    });
+    
+    $('#splash').animate({
+      opacity:1
+    }, 300);
+   
+    
+    $('#splash-img').animate({
+      opacity:1
+    }, 300);
+    
+    var ring = document.getElementById('ring');
+    var snow = document.getElementById('snow');
+    ring.play();
+    
+    $('#end').on('click', function() {
+      $('#splash').animate({
+        opacity:0
+      }, 300, function() {
+        location.href = "home.html";
+      });
+    });
+    
+    $('#pickup').on('click', function() {
+      ring.pause();
+      $('#call-from').slideUp();
+      $('#pickup').slideUp();
+      $('#pic').slideDown();
+      snow.play();
+      $('#snow').on('ended', function() {
+        $('#splash').animate({
+        opacity:0
+        }, 300, function() {
+          location.href = "home.html";
+        });
+      });
+    });
+    
+    
+
+    
+  });
+  </script>
+  
+</body>
+</html>

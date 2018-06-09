@@ -1,0 +1,63 @@
+@charset 'utf-8';
+/*
+	LOSTLY CSS MAIN
+*/
+
+
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    
+    font-family:Monaco, sans-serif;
+    font-size:18px;
+    margin:0px;
+    padding:0px;
+}
+
+
+div#container {
+	width:100%;
+}
+
+div#back {
+	position:fixed;
+	top:20px;
+	left:4px;
+  width:50px;
+  height:25px;
+	z-index:9;
+	background-color:rgba(200,200,200,0.7);
+	background-image:url(../img/backbtn1.png); 
+	background-repeat:no-repeat;
+	background-size:100%;
+	opacity:0.9;
+}
+
+#home {
+  position:fixed;
+  height:40px;
+  bottom:0px;
+  width:100%;
+  z-index:9;
+	background-color:rgba(255,255,255,0.99);
+	background-image:url(../img/backbtn1.png); 
+	background-repeat:no-repeat;
+  background-size:25%;
+  background-position:50% 0;
+}
+
+#splash {
+  background:#F8F8F8;
+  width:320px;
+ 
+  position:absolute;
+  z-index:99;
+}
+#splash-img {
+	opacity:0;
+}

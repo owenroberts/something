@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>lostly - messages</title>
+  <meta charset="utf-8">
+  <link type="text/css" rel="stylesheet" href="css/main.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  
+  <script type="text/javascript" src="js/jquery.js"></script>
+  
+  <style type="text/css">
+  
+  /* CSS for msgs */
+  
+  body {
+    opacity:0;
+    background:white;
+  }
+  
+  div.msg {   
+    position:relative;
+    display:block;    
+    clear:both;
+    padding:3px 12px;
+    opacity:0;
+  }
+  
+  
+  div.msg img {
+    zoom:0.6;
+  }
+  .left {
+    float:left;
+  }
+  .right {
+    float:right;
+  }
+  .last-msg {
+    margin-bottom:40px;
+  }
+  
+
+  div#container {
+    position:relative;
+  }
+ 
+  </style>
+  
+
+</head>
+
+<body>
+  <div id="home" onclick="location.href='home.html'"></div>     
+      <div id="container">   
+      </div>
+  <script src="js/fastclick.js" type="text/javascript" charset="utf-8"></script>          
+  <script type="text/javascript">
+  function shouldRotateToOrientation(orientation) {
+    switch (orientation) {
+            //Portrait or PortraitUpsideDown
+            case 0:
+            case 180:
+                return true;
+            //LandscapeRight or LandscapeLeft
+            case 90:
+            case -90:
+                 return false;
+        }
+  }
+  setTimeout(function(){
+    shouldRotateToOrientation(orientation)
+  }, 0);
+  
+  $(document).ready(function(){
+   
+    $(function() {
+        FastClick.attach(document.body);
+    });
+   
+    // hide the back ("home") button until the first msg animation finishes
+    $('body').animate({
+      opacity:1
+    }, 1000);
+    // get level number from localstorage
+    var level = parseInt(localStorage.getItem('gamestate'));
+    //if (localStorage["nextLevel"] == "true") {
+    if (localStorage["appCount"] > localStorage["apps"]) {
+
+      if (level < 6) level++;
+      localStorage["nextLevel"] = false;
+      localStorage["gamestate"] = level;
+      localStorage["apps"] = Math.random()*5;
+      localStorage["appCount"] = 0;
+    }
+
+    if (level == 0) {
+      localStorage["apps"] = 2 + Math.random()*2;
+      localStorage["appCount"] = 0;
+    }
+    
+    var msgInSound = new Audio('audio/msg-in.wav');
+    var msgOutSound = new Audio('audio/msg-out.wav');
+    
+    var counter = 0; // counts number of messages 
+    var limit = [17, 22, 26, 29, 23, 27, 28]; // number of messages in passage
+    var b = true; // if its the beginning, used to populate first msg
+    var grey = [   // msgs in first passage that should be left aligned bc they're grey
+                [1, 3, 5, 8, 9, 11, 12, 13, 14, 17],
+                [0, 4, 5, 6, 8, 9, 13, 14, 16, 17, 20, 22],
+                [1, 4, 6, 7, 8, 12, 13, 14, 15, 18, 22, 23],
+                [3, 4, 10, 12, 16, 18, 19, 20, 24, 25, 26, 27],
+                [0, 2, 4, 9, 10, 11, 12, 16, 18, 19, 21, 22],
+                [3, 7, 10, 13, 22, 23],
+                [0, 1, 2, 4, 5, 8, 9, 16, 17, 20, 22, 26, 27, 28]
+               ];
+               
+    var links = ['maps.html', 'notes.html'];  // where to go at end of each "level" 
+    $('#home').slideUp();
+    
+    if (localStorage.getItem(level) == "red" || localStorage.getItem(level) == "blue") {
+      for (var i = 0; i <= limit[level]; i++) {
+         if (counter < limit[level]) {         
+           var newmsg = '<div class="msg'+leftorright(counter)+'" id="'+counter+'"><img src="img/msgs/'+level+'/m'+level+'.'+counter+'.jpg"  /></div>';
+         } else if (counter == limit[level]) {
+     
+             var newmsg = '<div class="msg last-msg'+leftorright(counter)+'" id="'+counter+'"><img src="img/msgs/'+level+'/m'+level+'.'+counter+'.jpg"  /></div>';
+         }
+         counter++;
+         $(newmsg).appendTo('#container').css('opacity', 1);
+      }
+      $("html, body").animate({ scrollTop: $(document).height() }, 0);
+      $('#home').slideDown(0);
+    } else {
+      
+      addMsg();
+    }
+    
+    // adds message to the html
+    function addMsg() {
+      if (leftorright(counter) == ' left') {
+        msgInSound.play();
+      }  else {
+        msgOutSound.play();
+      }
+      if (counter < limit[level]) {
+        var newmsg = '<div class="msg'+leftorright(counter)+'" id="'+counter+'"><img src="img/msgs/'+level+'/m'+level+'.'+counter+'.jpg"  /></div>';
+        $(newmsg).appendTo('#container').animate({opacity:1}, { duration: 400, queue: false });
+        setTimeout(moveup, 1); 
+        counter++;       
+        
+        setTimeout(addMsg, getRand(1000,2000)); // calls next message after random timeout     
+      } else if (counter == limit[level]) {
+        localStorage.setItem(level, 'red'); // on last msg for level, sets level to "red"
+        var newmsg = '<div class="msg last-msg'+leftorright(counter)+'" id="'+counter+'"><img src="img/msgs/'+level+'/m'+level+'.'+counter+'.jpg"  /></div>';
+        $(newmsg).appendTo('#container').animate({opacity:1}, { duration: 400, queue: false });
+        setTimeout(moveup, 1);                 
+        setTimeout( function(){
+          $('#home').slideDown();
+          moveup();
+        }, 1000);
+        //alert('maps');
+        //setTimeout(location.href=links[level], 2400); // will be rewritten later when levels addes, currently goes to maps page at the end of first passage
+      }
+      
+    }     
+    
+ 
+    // scrolls the body to the most recently populated message
+    var moveup = function() {     
+       $("html, body").animate({ scrollTop: $(document).height() }, { duration: 800, queue: false });
+    }
+    
+    //changes left or right alignment for puprle and grey msgs
+    function leftorright(n) {
+      if (grey[level].indexOf(n) > -1 ) {
+        return ' left'
+      } else {
+        return ' right'
+      }
+    }
+
+    // generates random numbers in range
+  	function getRand(min, max) {
+  		return rand = Math.floor(Math.random() * (max - min) + min);
+  	};
+  });
+  
+  </script>
+  
+</body></html>
