@@ -8,6 +8,8 @@ function deviceCheck() {
 
 	if (!mobilecheck()) {
 		document.body.classList.add('desktop');
+		document.getElementById('container').classList.add('desktop');
+		document.getElementById('container').classList.add('dragscroll');
 	}
 }
 window.addEventListener('load', deviceCheck);

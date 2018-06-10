@@ -1,12 +1,16 @@
 * {
 	-webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+	box-sizing: border-box;
+}
+html, body {
+	width: 100%;
+	height: 100%;
 }
 
 body {
 	-webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
 	-webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
 	-webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-	
 	font-family:Monaco, sans-serif;
 	font-size:18px;
 	margin:0px;
@@ -15,7 +19,9 @@ body {
 
 div#container {
 	width:100%;
-	height: 100%;
+	height: 100%; 
+	padding-bottom: 50px;
+	z-index: 1;
 }
 
 div#back {
@@ -34,7 +40,7 @@ div#back {
 
 #home {
 	position:fixed;
-	height:40px;
+	height:50px;
 	bottom:0px;
 	width:100%;
 	z-index:9;
@@ -43,6 +49,17 @@ div#back {
 	background-repeat:no-repeat;
 	background-size:25%;
 	background-position:50% 0;
+
+	overflow-y: hidden;
+	transition: height 1s;
+}
+
+#home.slide-down {
+	height: 0;
+}
+
+#home.slide-up {
+	height: 50px;
 }
 
 #splash {
@@ -91,6 +108,7 @@ div#back {
 	opacity: 1;
 }
 
+
 /* desktop stuff */
 body.desktop {
 	box-sizing: border-box;
@@ -103,8 +121,16 @@ body.desktop {
 }
 body.desktop::after {
 	content: 'best viewed on mobile device';
-	position:relative;
-	top: 4em;
-	text-align:center;
+	position: absolute;
+	bottom: 4em;
+	text-align: center;
 }
 
+#container.desktop {
+	overflow: hidden;
+}
+
+body.desktop #home {
+	position: relative;
+	top: - 20px;
+}

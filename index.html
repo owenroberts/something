@@ -17,7 +17,6 @@
 		<div id="lost" class="fade-long fade-visible" >
 			<img src="img/index/something.jpg"  alt="Lost">
 		</div>
-		<img id="send" src="img/index/send.jpg" class="fade-short fade-visible" alt="Send">
 	</div>
 	<script type="text/javascript">
 
@@ -29,13 +28,10 @@
 				localStorage.setItem(i, 'green');
 			}
 
-			document.getElementById('send').onclick = function() {
-				this.classList.add('fade-out');
-				document.getElementById('lost').classList.add('fade-out');
-				setTimeout( function(){
-					location.href = "messages.html";
-				}, 1000);
-			};
+			document.getElementById('lost').classList.add('fade-out');
+			setTimeout( function(){
+				location.href = "messages.html";
+			}, 1000);
 		}
 
 		window.addEventListener('load', init);
