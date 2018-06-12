@@ -111,6 +111,7 @@ div#back {
 
 /* desktop stuff */
 body.desktop {
+	background-color: lightgray;
 	box-sizing: border-box;
 	width: 375px;
 	height: 667px;

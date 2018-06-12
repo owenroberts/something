@@ -7,27 +7,8 @@
 	<link rel="stylesheet" type="text/css" href="css/home.css" />
 	<script type="text/javascript" src="js/mobile-check.js"></script>
 	<script type="text/javascript" src="js/device-check.js"></script>
-	<script type="text/javascript" src="js/dragscroll.js"></script>
+	<!-- <script type="text/javascript" src="js/dragscroll.js"></script> -->
 	<title>home</title>
-	<style>
-		body {
-			opacity:0;
-			overflow:hidden;
-			padding-top:20px;
-		}
-		nav {
-			width:100%;
-			position:relative;
-		}
-		#statusbar {
-			position:fixed;
-			height:30px;
-			width:100%;
-			top:0;
-			text-align:center;
-		}
-		#statusbar img { width:100%; }
-	</style>
 </head>
 
 <body>
@@ -39,36 +20,54 @@
 			<img src="img/home/statusbar.png" alt="Statusbar">
 		</div>
 		<div id="content" class="content">
-		<nav>
-			<ul>
-				<li><a href="messages.html"><img src="img/icons/messages.png" alt="Massages">
-	        		<div id="msg-note"><img src="img/home/msg-note.png" /></div> 
-				</a></li>
-				<li><a href="notes.html"><img src="img/icons/notes.png"  alt="Notes"></a></li>
-				<li><a href="phone.html"><img src="img/icons/phone.png" alt="Phone"></a></li>
-				<li><a href="camera.html"><img src="img/icons/camera.png" alt="Camera"></a></li>
-				<li><a href="photos.html"><img src="img/icons/photos.png" alt="Photos"></a></li>
-				<li><a href="calendar.html"><img src="img/icons/calendar.png" alt="Calendar"></a></li>
-				<li><a href="maps.html"><img src="img/icons/map.png" alt="Maps"></a></li>
-			</ul> 
-		</nav>
+			<div class="icon">
+				<img class='app' id='messages' src="img/icons/messages.png" alt="Massages">
+				<div id="msg-note" class="long-fade fade-hidden"><img src="img/home/msg-note.png" /></div>
+			</div>
+			<div class="icon">
+				<img class='app' id='notes' src="img/icons/notes.png"  alt="Notes">
+			</div>
+			<div class="icon">
+				<img class='app' id='phone' src="img/icons/phone.png" alt="Phone">
+			</div>
+			<div class="icon">
+				<img class='app' id='camera' src="img/icons/camera.png" alt="Camera">
+			</div>
+			<div class="icon">
+				<img class='app' id='photos' src="img/icons/photos.png" alt="Photos">
+			</div>
+			<div class="icon">
+				<img class='app' id='calendar' src="img/icons/calendar.png" alt="Calendar">
+			</div>
+			<div class="icon">
+				<img class='app' id='maps' src="img/icons/map.png" alt="Maps">
+			</div>
+			
+		</div>
 	</div>
-	<!-- <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/jquery.mobile-1.4.0.min.js" type="text/javascript" charset="utf-8"></script> -->
 	<script type="text/javascript">  
   		function init() {
   			document.body.classList.add('fade-in');
-			/*$('.ui-loader').css('display', 'none');
-			$('.ui-page').css('min-height','0');
-			$('a').attr('data-ajax', 'false');*/
 
 			localStorage["mapzoom"] = false;
 			if (localStorage.getItem(6) == "red") {
 				location.href="call.html";
 				localStorage.setItem(6, "blue");
 			}
-			if(localStorage["appCount"] > localStorage["apps"]) 
-				$('#msg-note').fadeIn();
+
+			if (localStorage["appCount"] > localStorage["apps"]) 
+				document.getElementById('msg-note').classList.add('fade-in');
+
+			const appLinks = document.getElementsByClassName('app');
+			function goToLink() {
+				console.log(this);
+				location.href = this.id + '.html';
+			}
+			for (let i = 0; i < appLinks.length; i++) {
+				appLinks[i].addEventListener('tap', goToLink);
+				appLinks[i].addEventListener('click', goToLink);
+			}
+
   		}
   		window.addEventListener('load', init);
 	</script>
