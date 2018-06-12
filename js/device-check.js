@@ -10,6 +10,9 @@ function deviceCheck() {
 		document.body.classList.add('desktop');
 		document.getElementById('container').classList.add('desktop');
 		document.getElementById('container').classList.add('dragscroll');
+		localStorage.setItem('isMobile', false);
+	} else {
+		localStorage.setItem('isMobile', true);
 	}
 }
 window.addEventListener('load', deviceCheck);

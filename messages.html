@@ -29,6 +29,7 @@
 		div.msg img { zoom:0.6; }
 		.left {  text-align: left; }
 		.right { text-align: right; }
+		.last-msg { padding-bottom: 50px !important; }
 		div#container {  position:relative; }
 	</style>
 </head>
@@ -45,6 +46,8 @@
 		function init() {
 			document.body.classList.add('fade-in');
 			var level = parseInt(localStorage.getItem('gamestate'));
+			const isMobile = (localStorage.getItem('isMobile') === 'true');
+
 			// appCount is apps opened
 			// apps is number of apps to be opened i guess
 			if (localStorage["appCount"] > localStorage["apps"]) {
@@ -62,6 +65,7 @@
 			}
 
 			var msgInSound, msgOutSound;
+			let prevHeight = 0;
 
 			var counter = 0; // counts number of messages 
 			var limit = [17, 22, 26, 29, 23, 27, 28]; // number of messages in passage
@@ -94,8 +98,8 @@
 					buildMsg('fade-long');
 					counter++;
 				}
-				moveUp();
-				document.getElementById('home').classList.remove('slide-down');
+				setTimeout(moveUp, 1001);
+				homeBtn.classList.remove('slide-down');
 			} else {
 				document.getElementById('send').onclick = function() {
 					this.classList.add('fade-out');
@@ -139,8 +143,8 @@
 		        	setTimeout(addMsg, getRand(1000,2000));
 		     	 } else if (counter == limit[level]) {
 		     	 	// on last msg for level, sets level to "red"
-					// localStorage.setItem(level, 'red'); 
-		       		buildMsg();
+					localStorage.setItem(level, 'red'); 
+		       		buildMsg('fade-short');
 					setTimeout(moveUp, 10);                 
 					setTimeout( function(){
 						document.getElementById('home').classList.remove('slide-down');
@@ -153,13 +157,30 @@
 			// have to make one for desktop and one for mobile fuck me
 			function moveUp() {
 				const fps = 1000 / 60;
-				var scrollStep = window.innerHeight / (500 / fps),
-					scrollInterval = setInterval(function(){
-					if ( window.scrollY != window.innerHeight ) {
-						window.scrollBy( window.innerHeight, scrollStep );
-					}
-					else clearInterval(scrollInterval); 
-				}, fps);
+				if (!isMobile) {
+					const diff = cont.scrollHeight - prevHeight;
+					prevHeight = cont.scrollHeight;
+					const scrollStep = diff / (500 / fps);
+					let counter = 0;
+					var scrollInterval = setInterval(function(){
+						if ( cont.scrollHeight - cont.scrollTop != cont.clientHeight ) {
+							counter += scrollStep;
+							cont.scrollBy( cont.scrollHeight, scrollStep );
+						}
+						else clearInterval(scrollInterval); 
+					}, fps);
+				} else {
+					const diff = cont.scrollHeight - prevHeight;
+					var scrollStep = diff / (500 / fps);
+					let counter = 0;
+					var scrollInterval = setInterval(function(){
+						if ( cont.scrollHeight - window.scrollY != cont.clientHeight ) {
+							counter += scrollStep;
+							window.scrollBy( window.innerHeight, scrollStep );
+						}
+						else clearInterval(scrollInterval); 
+					}, fps);
+				}
 			} // https://stackoverflow.com/questions/21474678/scrolltop-animation-without-jquery
 
     		// changes left or right alignment for puprle and grey msgs
