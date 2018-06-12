@@ -1,17 +1,11 @@
-#container {
-	text-align:center;
+#container { 
+	text-align:center; 
+	background: white;
 }
 
-img {
-	zoom:0.5;
-}
+img { zoom:0.5; }
 
 div#lost {
 	position:relative;
 	top:100px;
 }
-
-/*img#send {
-	position:relative;
-	top:300px;
-}*/

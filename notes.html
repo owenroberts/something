@@ -1,173 +1,108 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>lostly -- notes</title>
-  <meta charset="utf-8">
-  <link rel="stylesheet" type="text/css" href="css/main.css">
-   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-  
-  <style type="text/css">
-  body {
-    opacity:0;
-    
-  }
-  #container {
-    padding-top:54px;
-    padding-bottom:40px;
-  }
-  #header {
-    width:100%;
-    position:fixed;
-    z-index:1;
-  }
-  
-  #header img {
-    width:inherit;
-  }
-  
-  .note {
-    width:100%;
-    height:40px;
-    overflow:hidden;
-    position:relative;
-    border-bottom:1px dotted lightgray;
-    
-  }
-  
-  .note img {
-    width:inherit;
-  }
-  
-  #notes-back {
-    position:fixed;
-    top:20px;
-    right:50px;
-    width:50px;
-    z-index:9;
-    display:none;
-  }
-  
-  #notes-back img {
-    width:100%;
-  }
-  
-  </style>
-  
+	<meta charset="utf-8" />
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+	<link rel="stylesheet" type="text/css" href="css/main.css" />
+	<script type="text/javascript" src="js/mobile-check.js"></script>
+	<script type="text/javascript" src="js/device-check.js"></script>
+	<script type="text/javascript" src="js/dragscroll.js"></script>
+	<title>notes</title>
+	<link rel="stylesheet" href="css/notes.css" type="text/css"> 
 </head>
 
-<body>
-  <div id="home"></div>     
-  <div id="header"><img src="img/notes/notes.png" /></div>
-  <div id="container"></div>
-  <div id="notes-back">
-    <img src="img/notes/backbtn.png" alt="Backbtn">
-  </div>
-  
-  <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  
-  <script  type="application/javascript" src="js/fastclick.js"></script>
-  
-  <script type="application/javascript">
-  
-  function shouldRotateToOrientation(orientation) {
-    switch (orientation) {
-            //Portrait or PortraitUpsideDown
-            case 0:
-            case 180:
-                return true;
-            //LandscapeRight or LandscapeLeft
-            case 90:
-            case -90:
-                 return false;
-        }
-  }
-  setTimeout(function(){
-    shouldRotateToOrientation(orientation)
-  }, 0);
-  
-  $(document).ready( function() {
+<body class="fade-long fade-hidden">
+	<div id="container">
+		<div id="header">
+			<img src="img/notes/notes.png" />
+		</div>
+		<div id="notes-back" class="fade-short fade-hidden">
+			<img src="img/notes/backbtn.png" alt="Backbtn">
+		</div>
+		<div id="notes"></div>
+	</div>
+	<div id="home"></div>
+	
+	<script type="application/javascript">
+		// list of the imgs of notes
+		var noteImgs = [ 
+				"/img/notes/jan29.jpg",
+				"/img/notes/jan13.jpg",
+				"/img/notes/jan3.jpg" ,
+				"/img/notes/dec17.jpg",
+				"/img/notes/dec12.jpg", 
+				"/img/notes/nov21.jpg",
+				"/img/notes/oct20.jpg",
+				"/img/notes/oct17.jpg",
+				"/img/notes/oct1.jpg" ,
+				"/img/notes/sept12.jpg",
+				"/img/notes/sept11.jpg", 
+				"/img/notes/sept1.jpg",
+				"/img/notes/august21.jpg",
+				"/img/notes/june29.jpg",
+				"/img/notes/june13.jpg",
+				"/img/notes/june1.jpg",
+				"/img/notes/may24.jpg",
+				"/img/notes/may2.jpg" ,
+				"/img/notes/may1.jpg" ,
+				"/img/notes/april17.jpg",
+				"/img/notes/april11.jpg",
+				"/img/notes/march13.jpg", 
+				"/img/notes/feb25.jpg"
+		];
+  		function init() {
+  			document.body.classList.add('fade-in');
 
-    $(function() {
-        FastClick.attach(document.body);
-    });
-    
-    localStorage["appCount"]++;
-    
-    $('#home').on('click', function(){
-      location.href='home.html';
-    });
-    $('body').animate({
-      opacity:1
-    }, 1000);
-    
-    // list of the imgs of notes
-    var notes = [ 
-     "img/notes/jan29.jpg",
-     "img/notes/jan13.jpg",
-     "img/notes/jan3.jpg" ,
-     "img/notes/dec17.jpg",
-     "img/notes/dec12.jpg", 
-     "img/notes/nov21.jpg",
-     "img/notes/oct20.jpg",
-     "img/notes/oct17.jpg",
-     "img/notes/oct1.jpg" ,
-     "img/notes/sept12.jpg",
-     "img/notes/sept11.jpg", 
-     "img/notes/sept1.jpg",
-     "img/notes/august21.jpg",
-     "img/notes/june29.jpg",
-     "img/notes/june13.jpg",
-     "img/notes/june1.jpg",
-     "img/notes/may24.jpg",
-     "img/notes/may2.jpg" ,
-     "img/notes/may1.jpg" ,
-     "img/notes/april17.jpg",
-     "img/notes/april11.jpg",
-      "img/notes/march13.jpg", 
-     "img/notes/feb25.jpg"
-     ];
-    
-    // height of note
-    var nh = 40;
-    
-    // appends each notes to container with wrapper .note div
-    for(var i = 0, len = notes.length; i < len; i++) {
-      var n = '<div class="note"><img src='+notes[i]+' /></div>';
-      $('#container').append(n);
-    }
-    var c = false;
-    // expands note on first click, collapse on second
-    $('.note').click(function(){    
-      var n = $(this).css('height');
-      n = n.substring(0, n.length - 2);
-      $('#notes-back').fadeIn(); 
-      
-      if (!c) {
-        $('.note').css({
-          height: 0
-        });
-        $(this).css({
-          height: '530px'
-        });
-        c = true;
-        window.scrollTo(0,0);
-      }
-      
-      //
-      
-      $('#notes-back').on('click', function(){
-        $('.note').css({
-          height: '40px'
-        });
-        $(this).fadeOut();
-        c = false;
-      });
-      
+			localStorage["appCount"]++;
+			document.getElementById('home').onclick = function() {
+				location.href = 'home.html';
+			}
 
-    });
-    
-  });
+			const cont = document.getElementById('container');
+			const backBtn = document.getElementById('notes-back');
+			const notes = document.getElementsByClassName('note');
+			const noteContainer = document.getElementById('notes');
+
+			document.getElementById('header').style.width = cont.clientWidth + 'px';
+
+			let noteIsOpen = false; // clicked on notes
+			let currentNote = null;
+
+			backBtn.onclick = function() {
+				backBtn.classList.remove('fade-in');
+				window.scrollTo(0, 0);
+				closeNotes();
+				noteIsOpen = false;
+			}
+
+			function closeNotes() {
+				for (let i = 0; i < notes.length; i++) {
+					notes[i].style.height = '40px';
+				}
+			}
+
+			// appends each notes to container with wrapper .note div
+			for(let i = 0; i < noteImgs.length; i++) {
+				const note = document.createElement('div');
+				note.classList.add('note');
+				note.onclick = function() {
+					const h = this.clientHeight;
+					backBtn.classList.add('fade-in');
+					if (!noteIsOpen) {
+						this.style.height = '530px';
+						noteIsOpen = true;
+					} else {
+						closeNotes();
+						this.style.height = '530px';
+					}
+				}
+				const img = new Image();
+				img.src = noteImgs[i];
+				note.appendChild(img);
+				noteContainer.appendChild(note);
+			}
+  		}
+  		window.addEventListener('load', init);
   
   </script>
 </body>
