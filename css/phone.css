@@ -1,0 +1,63 @@
+body { opacity:0; }
+img { /*float:left; */ } /* fix this */
+#container {
+	padding-bottom:100px;
+	background: white;
+	position: relative;
+}
+header {
+	width: 50%;
+	margin:0 auto;
+}
+
+div#voicemails {
+	width: 100%;
+/*	width:320px;
+	float:left;*/
+}
+
+.msg {
+	padding:20px 0;
+	clear:left;
+}
+
+div#voicemails img {
+	width:inherit;
+}
+   
+div.name img {
+	width:100%;
+}
+
+div.play img, div.sound img {
+	width:auto;
+	zoom:0.5;
+}
+  
+  
+  /* relationship between div.sound, div.play, div.ov, and theimages is important  and only works this way */
+div.sound, div.play {
+	position:relative;
+	/*float:left;*/
+	transition: height 400ms;
+	height: 0;
+	overflow: hidden;
+	display: inline-block;
+}
+
+div.slide-down {
+	height: 60px;
+}
+
+div.ov {
+	position:absolute;
+	left:0;
+	top:0;
+	right:0;
+	bottom:0;
+	background:rgba(255,255,255,0.8);
+}
+
+audio {
+	width:0;
+}

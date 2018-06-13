@@ -1,171 +1,124 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>lostly - messages</title>
-  <meta charset="utf-8">
-  <link type="text/css" rel="stylesheet" href="css/main.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <script type="text/javascript" src="js/jquery.js"></script>
-  
-  <style type="text/css">
-  
-  /* CSS for layout of voicemail assets */
-  body {
-    opacity:0;
-  }
-  img {
-    float:left;
-  }
-  header {
-    width:200px;
-    margin:0 auto;
-  }
-  
-
-  div#voicemails {
-    width:320px;
-    float:left;
-    
-  }
-  
-  .msg {
-    padding:20px 0;
-    clear:left;
-  }
-
-  div#voicemails img {
-    width:inherit;
-  }
-   
-  div.name img {
-    width:100%;
-  }
-
-  div.play img, div.sound img {
-    width:auto;
-    zoom:0.5;
-    
-  }
-  
-  
-  /* relationship between div.sound, div.play, div.ov, and theimages is important  and only works this way */
-  div.sound, div.play {
-    position:relative;
-    float:left;
-  }
-
-  div.ov {
-    position:absolute;
-    left:0;
-    top:0;
-    right:0;
-    bottom:0;
-    background:rgba(255,255,255,0.8);
-  }
-
-  div.play, div.sound {
-    display:none;
-  }
-  audio {
-    width:0;
-  }
-  </style>
-  
-
+	<meta charset="utf-8">
+	<link type="text/css" rel="stylesheet" href="css/main.css">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+	<link rel="stylesheet" type="text/css" href="css/main.css" />
+	<link rel="stylesheet" type="text/css" href="css/phone.css" > 
+	<script type="text/javascript" src="js/mobile-check.js"></script>
+	<script type="text/javascript" src="js/device-check.js"></script>
+	<script type="text/javascript" src="js/dragscroll.js"></script>
+	<title>phonemail</title>
 </head>
 
 <body>
-  <div id="home" onclick="location.href='home.html'"></div>
-  <div id="container"> 
-    <header><img src="img/phone/voicemails-title.jpg" width="180px" alt="Voicemails Title"></header>
-  </div>
+	<div id="container">
+		<div id="orientation-blocker">
+			Please view in portrait orientation :)
+		</div>
+		<header>
+			<img src="img/phone/voicemails-title.jpg" width="100%" alt="Voicemails Title">
+		</header>
+	</div>
 
-  <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script type="text/javascript">
-  function shouldRotateToOrientation(orientation) {
-    switch (orientation) {
-            //Portrait or PortraitUpsideDown
-            case 0:
-            case 180:
-                return true;
-            //LandscapeRight or LandscapeLeft
-            case 90:
-            case -90:
-                 return false;
-        }
-  }
-  setTimeout(function(){
-    shouldRotateToOrientation(orientation)
-  }, 0);
-  
-  $(document).ready(function(){
-    
-    $('body').animate({
-      opacity:1
-    }, 1000);
-    
-    localStorage["appCount"]++;
+	<div id="home" onclick="location.href='home.html'"></div>
+	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var voicemails = ["01312014", "01252014",  "01122014", "01112014", "12202013", "12022013", "11302013", "11242013", "10312013", "10192013", "09132013", "08222013", "07032013", "05132013", "04022013","03212013", "02172013" ]; //list of voicemail names refer to file names and audio element ids
 
-    
-    var voicemails = ["01312014", "01252014",  "01122014", "01112014", "12202013", "12022013", "11302013", "11242013", "10312013", "10192013", "09132013", "08222013", "07032013", "05132013", "04022013","03212013", "02172013" ]; //list of voicemail names refer to file names and audio element ids
-    len = voicemails.length; // num of voicemails
-    var isopen = ""; // keeps track of which voicemail is open
-    // for each voicemail recording make a div with the art assets, audio element and html structure
-    for (var i = 0; i < len; i++) {
-      var n = voicemails[i];
-      var message = '<div class="msg"><div class="name"><img src="img/phone/'+n+'-name.jpg" /></div><div class="play"><img src="img/phone/'+n+'-play.jpg" /><audio id="'+n+'"><source src="audio/'+n+'.mp3" type="audio/mpeg" /></audio></div><div class="sound"><div class="ov"></div><img src="img/phone/'+n+'-sound.jpg" /></div></div>';
-      $('#container').append(message); // add it to div container
-    }
-    var lastMsg = document.getElementsByClassName('msg');
-    lastMsg = lastMsg[lastMsg.length - 1];
-    lastMsg.style.paddingBottom = '160px';
-    
-    // actions to open and close voicemails when name is clicked
-    $('.name').click( function() {
-      var which = $(this).siblings().find('audio').attr('id'); // get the clicked voicemail
-        if (!isopen) {  // if its not open, open the play and audio divs and change the opened voicemail to the current
-          $(this).siblings().slideDown(400);
-          isopen = which;
-        } else if (isopen == which){  //if its open, close it 
-          var v = $(this).siblings().find('audio').attr('id');
-          var voicemail = document.getElementById(v);
-          if (!voicemail.paused) {  // if audio is playing (not paused bc you can't pause audio that isn't playing), pause it
-            voicemail.pause();
-            voicemail.currentTime = 0;  // rest the audio clip
-          }
-          $(this).siblings().slideUp(200);  // hide the play and audio divs
-          isopen = "";  // no voicemail is open
-        } else { // if another voicemail is open
-          var voicemail = document.getElementById(isopen);  // get the open voicemail 
-          if (!voicemail.paused) { // if audio is playing (not paused), pause it
-            voicemail.pause();
-            voicemail.currentTime = 0;
-          }
-          $('#'+isopen).parent().slideUp(200);  // close play and audio elements
-          $('#'+isopen).parent().siblings('.sound').slideUp(200);
-          $(this).siblings().slideDown(400); // open clicked voicemail
-          isopen = which; // set open voicemail to clicked voicemail
-        }
-    })
-    
-    // if user clicks play button find audio element and play it
-    $('.play').click( function() {     
-      var v = $(this).find('audio').attr('id');
-      var voicemail = document.getElementById(v);
-      voicemail.play();
-    });
-    
-    // if audio is playing, change the width of the ov (overlay) div so that to animate the time
-    $('audio').on('timeupdate', function(event) {
-      var alen = this.duration;
-      var ovw = $('.sound').width();
-      var w = this.currentTime/alen;
-      $('.ov').css('left', w*ovw );
-    });
-    
-  });
-  
-  
+		function init() {
+			document.body.classList.add('fade-in');
+			document.getElementById('home').onclick = function() {
+				location.href = 'home.html';
+			}
+			const cont = document.getElementById('container');
+			localStorage["appCount"]++;
+			let openMailId = ''; // keeps track of which voicemail is open
+			// for each voicemail recording make a div with the art assets, audio element and html structure
+			for (let i = 0; i < voicemails.length; i++) {
+				const message = document.createElement('div');
+				message.classList.add('msg');
+				message.id = voicemails[i];
+				if (i == voicemails.length - 1)
+					message.style.paddingBottom = '160px';
+				
+				const name = document.createElement('div');
+				name.classList.add('name');
+				const nameImg = new Image();
+				nameImg.src = '/img/phone/' + voicemails[i] + '-name.jpg';
+				name.appendChild(nameImg);
+				message.appendChild(name);
+
+				const play = document.createElement('div');
+				play.classList.add('play');
+				play.id = 'play-' + voicemails[i];
+				const playImg = new Image();
+				playImg.src = '/img/phone/' + voicemails[i] + '-play.jpg';
+				play.appendChild(playImg);
+				message.appendChild(play);
+
+				const audio = new Audio('/audio/' + voicemails[i] + '.mp3');
+				const sound = document.createElement('div');
+				sound.classList.add('sound');
+				sound.id = 'sound-' + voicemails[i];
+				const ov = document.createElement('div');
+				ov.classList.add('ov');
+				sound.appendChild(ov);
+				const soundImg = new Image();
+				soundImg.src = '/img/phone/' + voicemails[i] + '-sound.jpg';
+				sound.appendChild(soundImg);
+				message.appendChild(sound);
+
+				function openMail() {
+
+					if (!openMailId) {
+						play.classList.add('slide-down');
+						sound.classList.add('slide-down');
+						openMailId = voicemails[i];
+					} else if (openMailId == voicemails[i]) {
+						if (!audio.paused) {
+							audio.pause();
+							audio.currentTime = 0;
+						}
+						play.classList.remove('slide-down');
+						sound.classList.remove('slide-down');
+						openMailId = '';
+					} else {
+						if (!audio.paused) {
+							audio.pause();
+							audio.currentTime = 0;
+						}
+						play.classList.add('slide-down');
+						sound.classList.add('slide-down');
+						document.getElementById('play-' + openMailId).classList.remove('slide-down');
+						document.getElementById('sound-' + openMailId).classList.remove('slide-down');
+						openMailId = voicemails[i];
+					}
+				}
+				name.addEventListener('click', openMail);
+				name.addEventListener('tap', openMail);
+				
+
+				play.onclick = function() {
+					audio.play();
+				}
+
+				// update audio visual
+				audio.addEventListener('timeupdate', function() {
+					const len = audio.duration;
+					const ovw = sound.clientWidth;
+					const w = audio.currentTime / len;
+					ov.style.left = Math.floor(w * ovw) + 'px';
+				})
+
+				cont.appendChild(message);
+			}
+
+
+
+		}
+		window.addEventListener('load', init);
     
   </script>
 </body></html>
