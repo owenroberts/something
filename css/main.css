@@ -84,6 +84,12 @@ div#back {
 	padding: 2em;
 }
 
+@media screen and (orientation:landscape) {
+	#orientation-blocker {
+		display: block;
+	}
+}
+
 .fade-visible {
 	opacity: 1;
 }

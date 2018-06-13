@@ -1,18 +1,14 @@
-function deviceCheck() {
-	window.addEventListener("orientationchange", function() {
-		if (window.orientation)
-			document.getElementById('orientation-blocker').style.display = 'block';
-		else
-			document.getElementById('orientation-blocker').style.display = 'none';
-	});
+function setDesktop() {
+	document.body.classList.add('desktop');
+	document.getElementById('container').classList.add('desktop', 'dragscroll');
+}
 
-	if (!mobilecheck()) {
-		document.body.classList.add('desktop');
-		document.getElementById('container').classList.add('desktop');
-		document.getElementById('container').classList.add('dragscroll');
-		localStorage.setItem('isMobile', false);
-	} else {
-		localStorage.setItem('isMobile', true);
-	}
+function deviceCheck() {
+	const m = localStorage.getItem('isMobile') || mobilecheck();
+	if (m === 'false' || m === false)
+		setDesktop();
+	if (m === true || m === false)
+		localStorage.setItem('isMobile', m);
+
 }
 window.addEventListener('load', deviceCheck);
