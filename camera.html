@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta charset="utf-8">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, user-scalable=0">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<script type="text/javascript" src="js/mobile-check.js"></script>
 	<script type="text/javascript" src="js/device-check.js"></script>
@@ -11,76 +11,53 @@
     <style type="text/css">
 		#container {
 			background:black;
+			padding-top: 10px;
+		}
+		#container.desktop {
 			padding-top: 60px;
 		}
-		#desktop-capture {
+		#desktop-capture, #mobile-capture {
 			width: 40%;
 			margin: 0 auto;
 		}
-		#desktop-capture img { width: 100%; }
+		#desktop-capture { display: none; }
+		#desktop-capture img, #mobile-capture img { width: 100%; }
 		#home { background-color: black; }
+		#no-camera {
+			display: none;
+			color: white;
+		}
+		input { display: none; }
+
+		#container.desktop #mobile-capture {
+			display: none;
+		}
+		#container.desktop #desktop-capture {
+			display: block;
+		}
     </style>
     <title>chimera</title>
-    <script type="text/javascript" charset="utf-8">
-        	
-
-          var pictureSource;   // picture source
-          var destinationType; // sets the format of returned value
-
-          document.addEventListener("deviceready",onDeviceReady,false);
-
-          function onDeviceReady() {
-              console.log('device ready')
-              pictureSource=navigator.camera.PictureSourceType;
-              destinationType=navigator.camera.DestinationType;
-          }
-        
-          // get canvas and save as image (uses  plugin)
-          function capCanvas() {    
-            window.canvas2ImagePlugin.saveImageDataToLibrary(
-                 function(msg){
-                  console.log(msg);
-                 },
-                 function(err){
-                     console.log(err);
-                 },
-                 document.getElementById('myCanvas')
-             );
-           }
-
-           //when image data is received, add img to the canvas, choose random skeleton image, add that, then save both as image
-           function onPhotoDataSuccess(imageData) { 
-             canvasImg("data:image/png;base64," + imageData); 
-             var sk = getRand(skels.length);
-             setTimeout(function(){canvasImg(skels[sk]);}, 80); 
-           }       
-           // function to add images to the canvas using url (works with data)
-          function canvasImg(url) {
-            var c = document.getElementById("myCanvas");
-            var ctx = c.getContext("2d");
-            ctx.webkitImageSmoothingEnabled = true;
-            var imageObj = new Image();
-            imageObj.onload = function() {
-              ctx.drawImage(imageObj, parseInt(0), parseInt(0), 320, 320);
-            };
-            imageObj.src = url;
-            setTimeout(function(){capCanvas();}, 500);
-          }
-
-        
-          function capturePhotoEdit() {
-            // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
-            navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50, allowEdit: true,
-              destinationType: destinationType.DATA_URL });
-          }
-	</script>
 </head>
 
 <body >
 	<div id="container">
-		<video id="webcam" autoplay style='display:none;'></video>
+		<div id="orientation-blocker">
+			Please view in portrait orientation :)
+		</div>
+		<div id="no-camera">
+			You don't have a camera.
+		</div>
+
+		<video id="webcam"  autoplay style='display:none;'></video>
 		<canvas id="photo"></canvas>
-		<input id="mobile-capture" type="file" accept="image/*" capture="camera" />
+
+		<div id="mobile-capture">
+			<label for="mobile-btn">
+				<img src="/img/camera/capture.png" alt="">
+			</label>
+			<input id="mobile-btn" type="file" accept="image/*" capture="camera">
+		</div>
+		
 		<div id="desktop-capture">
 			<img src="/img/camera/capture.png" alt="">
 		</div>
@@ -90,6 +67,7 @@
 		// list of images to superimpose on camera shots (skeletons)
 		var skels = [ "img/camera/s1.png", "img/camera/s2.png", "img/camera/s3.png", "img/camera/s4.png", "img/camera/s5.png", "img/camera/s6.png", "img/camera/s7.png", "img/camera/s8.png", "img/camera/s9.png", "img/camera/s10.png" ];
 		function init() {
+			const isMobile = (localStorage.getItem('isMobile') === 'true');
 			localStorage["appCount"]++;
 			function goHome() {
 				location.href = '/home.html';
@@ -107,23 +85,49 @@
 			canvas.width = webcam.width;
 			canvas.height = webcam.width;
 
-			let saveFiles = false;
-			if (window.File && window.FileReader && window.FileList && window.Blob) {
-				saveFiles = true;
-				console.log("%c Save file enabled ", "color:lightgreen;background:black;");
+			/* phone */
+			const mobileCapButton = document.getElementById('mobile-btn');
+  			mobileCapButton.addEventListener('change', (ev) => {
+  				mobileCapture(ev.target.files[0]);
+  			});
+
+  			function mobileCapture(file) {
+  				const cap = new Image();
+  				cap.onload = capLoaded;
+  				cap.src = URL.createObjectURL(file);
+
+  				function capLoaded() {
+  					context.drawImage(cap, 0, 0, canvas.width, canvas.height);
+	  				const img = new Image();
+					img.onload = drawImage;
+					img.src = skels[Math.floor(Math.random() * skels.length)];
+					function drawImage() {
+						context.drawImage(img, 0, 0, canvas.width, canvas.height);
+					}
+  				}
+  			}
+
+  			let saveFiles = false;
+			if (!isMobile) {
+				if (window.File && window.FileReader && window.FileList && window.Blob) {
+					saveFiles = true;
+					console.log("%c Save file enabled ", "color:lightgreen;background:black;");
+				}
+				setupNav();
 			}
 
-			navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
-			if (navigator.getUserMedia) { 
-				navigator.getUserMedia({video: true}, videoHandler, videoError);
-			}
-			function videoHandler(stream) {
-				console.log(stream);
-				webcam.src = window.URL.createObjectURL(stream);
-			}
-			function videoError(error) {
-				console.log(error);
-			}
+  			function setupNav() {
+  				navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+				if (navigator.getUserMedia) { 
+					//navigator.getUserMedia({video: true}, videoHandler, videoError);
+					navigator.mediaDevices.getUserMedia({ video: true, audio: false})
+	  					.then(stream => webcam.srcObject = stream)
+	  					.catch(e => console.error(e));
+	  				// https://stackoverflow.com/questions/34199436/webrtc-getusermedia-promise-api-support-in-chrome
+				} else {
+					document.getElementById('no-camera').style.display = 'block';
+				}
+  			}
 
 			function mirrorImage() {
 				context.save();
@@ -132,11 +136,13 @@
 				context.drawImage(webcam, 0, 0, canvas.width, canvas.height);
 				context.restore();
 			}
+			
 			let photoInterval;
 			function startCameraInterval() {
 				photoInterval = setInterval(mirrorImage, 1000 / 24);
 			}
-			webcam.addEventListener("loadedmetadata", startCameraInterval);
+			if (!isMobile)
+				webcam.addEventListener("loadedmetadata", startCameraInterval);
 
 			function capture() {
 				const img = new Image();
@@ -160,7 +166,5 @@
 		}
 		
 		window.addEventListener('load', init);
-
-
 	</script>
 </body>
