@@ -1,358 +1,194 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    
-    <link rel="stylesheet" type="text/css" href="css/main.css" />
-    <style type="text/css">
-   
-   
-    /* sets up portrait container for photos */
-   
-   
-    body {
-      height:548px;
-      opacity:0;
-    }
-   
-    img {
-      padding:0;
-      margin:0;
-      /*transition: width 1s;*/
-      
-    }
-   
-    ul#imgs {
-      padding:0;
-      margin:0;
-      list-style:none;
-      height:528px;
-      position:relative;
-      right:0;
-    }
-    
-    ul#imgs li {
-      width:320px;
-      text-align:center;
-      float:left;
-      height:528px;
-      display:table;      
-    }
-    
-    ul#imgs li .img {
-      display:table-cell;
-      vertical-align:middle;
-      
-    }   
-    
-    div#container {
-      position:relative;
-      width:320px;
-      overflow:hidden;  
-      height:568px;  
-    }
-
-    #left {
-      vertical-align:bottom;
-      width:50px;
-      height:50px;
-      position:absolute;
-      bottom:0;
-      left:0;
-      z-index:999;
-    } 
-    #right {
-      position:absolute;
-      width:50px;
-      height:50px;
-      bottom:0;
-      right:0;
-      z-index:999;
-    }  
-    #right img, #left img {
-      width:100%;
-      
-    }
-    header {
-      margin:0 auto;
-      width:160px;
-      position:absolute;
-      top:0px;
-      left:80px;
-    }
-    header img {
-      width:100%;
-    }
-    
-  
-    /* separated so the images size appropriately given orientation */
-    
-   @media screen and (orientation:portrait){
-     
-     div.img img {
-      width:320px;
-      
-     }
-     #home {
-       display:block;
-     }
-     header {
-       display:block;
-     }
-     
-   }
-   
-   /* change image orienation */
-
-    @media screen and (orientation:landscape) and (max-width:600px) {
-          
-      body {
-        height:320px;
-      }
-      header {
-        display:none;
-      }
-      ul#imgs {
-        height:320px; 
-      }
-      
-      ul#imgs li {
-        width:568px;
-        height:320px;
-        text-align:center;
-        overflow:hidden;
-      }
-      
-      ul#imgs li .img {
-         vertical-align:top;
-       }
-      
-      div.img img {
-        height:320px;
-      }
-      
-      div#container {
-        width:568px;
-         height:320px;
-      } 
-      #home {
-        display:none;
-      }    
-
-    }
-   
-    </style>
-    
-    <title>lostly -- photos</title>    
-
+	<meta charset="utf-8">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/photos.css">
+	<script type="text/javascript" src="js/mobile-check.js"></script>
+	<script type="text/javascript" src="js/device-check.js"></script>
+	<script type="text/javascript" src="js/hammer.min.js"></script>
+	<!-- <script type="text/javascript" src="js/dragscroll.js"></script> -->
+    <title>photos</title>    
 </head>
 
-<body data-role="none">
-  <div id="home" onclick='location.href="home.html"'></div>
-    
-  <div id="container">
-    <header><img src="img/photos/photolib.jpg" /></header>
-    <div id="left"><img src="img/photos/left.jpg" /></div>
-    <div id="right"><img src="img/photos/right.jpg" /></div>
-    <ul id="imgs">
-      
-    </ul>
-    
-  </div>
-  
-  <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/jquery.mobile-1.4.0.min.js" type="text/javascript" charset="utf-8">  </script>
-  <script src="js/fastclick.js" type="text/javascript" charset="utf-8"></script>
-  
-  <script type="text/javascript">
-  function shouldRotateToOrientation(orientation) {
-    switch (orientation) {
-            //Portrait or PortraitUpsideDown
-            case 0:
-            case 180:
-                return true;
-            //LandscapeRight or LandscapeLeft
-            case 90:
-            case -90:
-                 return true;
-        }
-  }
-  setTimeout(function(){
-    shouldRotateToOrientation(orientation)
-  }, 0);
-    $(document).ready( function() {
-    
-      $(function() {
-          FastClick.attach(document.body);
-      });
-      
-      localStorage["appCount"]++;
+<body class="fade-long fade-hidden">
+	<div id="container">
+		<header>
+			<img src="img/photos/photolib.jpg" />
+		</header>
+		<div id="left">
+			<img src="img/photos/left.jpg" />
+		</div>
+		<div id="right">
+			<img src="img/photos/right.jpg" />
+		</div>
+		<div id="imgs"></div>
+	</div>
+	<div id="home"></div>
+	<script type="text/javascript">
+		//list of images to appear in slideshow - add new images here.  bottom image is first that appears
+		var scanner = [
+			"img/photos/catcartoon2.jpg" ,
+			"img/photos/catcartoon1.jpg" ,
+			"img/photos/alleydog1.jpg"   ,
+			"img/photos/alleydog2.jpg"   ,
+			"img/photos/alleydog3.jpg"   ,
+			"img/photos/bench.jpg"       ,
+			"img/photos/booger1.jpg"     ,
+			"img/photos/booger2.jpg"     ,
+			"img/photos/booger3.jpg"     ,
+			"img/photos/draw-6.jpg"      ,
+			"img/photos/chicken1.jpg"    ,
+			"img/photos/chicken2.jpg"    ,
+			"img/photos/cranes1.jpg"     ,
+			"img/photos/cranes2.jpg"     ,
+			"img/photos/cranes3.jpg"     ,
+			"img/photos/deadbird.jpg"    ,
+			"img/photos/deadcat1.jpg"    ,
+			"img/photos/deadcat2.jpg"    ,
+			"img/photos/deadcat3.jpg"    ,
+			"img/photos/dock1.jpg"       ,
+			"img/photos/dock2.jpg"       ,
+			"img/photos/dock3.jpg"       ,
+			"img/photos/dock4.jpg"       ,
+			"img/photos/dock5.jpg"       ,
+			"img/photos/dock6.jpg"       ,
+			"img/photos/window.jpg"      ,
+			"img/photos/draw-2.jpg"      ,
+			"img/photos/draw-3.jpg"      ,
+			"img/photos/draw-14.jpg"     , 
+			"img/photos/pig1.jpg"        , 
+			"img/photos/pig2.jpg"        , 
+			"img/photos/pig3.jpg"        , 
+			"img/photos/pig4.jpg"        , 
+			"img/photos/rat1.jpg"        , 
+			"img/photos/rat2.jpg"        , 
+			"img/photos/roomcat1.jpg"    , 
+			"img/photos/roomcat2.jpg"    , 
+			"img/photos/roomcat3.jpg"    , 
+			"img/photos/roomcat4.jpg"    , 
+			"img/photos/roomcat5.jpg"    , 
+			"img/photos/suckspig1.jpg"   , 
+			"img/photos/suckspig2.jpg"   , 
+			"img/photos/trashcan1.jpg"   , 
+			"img/photos/trashcan2.jpg"   , 
+			"img/photos/trashcan3.jpg"   , 
+			"img/photos/trashcan4.jpg"   , 
+			"img/photos/trashcan5.jpg"   , 
+			"img/photos/trashcan6.jpg"   , 
+			"img/photos/trashcan7.jpg"   , 
+			"img/photos/trashcan8.jpg"   , 
+			"img/photos/trashcan9.jpg"   , 
+			"img/photos/tvcat1.jpg"      , 
+			"img/photos/tvcat2.jpg"      , 
+			"img/photos/weirdguy1.jpg"   , 
+			"img/photos/weirdguy2.jpg"   , 
+			"img/photos/weirdguy3.jpg" 
+      	]; 
+		function init() {
+			localStorage["appCount"]++;
+			document.body.classList.add('fade-in');
+			document.getElementById('home').onclick = function() {
+				location.href = 'home.html';
+			}
 
-    
-      $('body').animate({
-        opacity:1
-      }, 1000); 
-      //wtf - this takes out some bullshit jquery mobile adds
-      $('.ui-page').css('min-height','0');
-      $(".ui-loader").hide(); // some bullshit
-    
-      //list of images to appear in slideshow - add new images here.  bottom image is first that appears
-    	var scanner = [
-          "img/photos/catcartoon2.jpg" ,
-          "img/photos/catcartoon1.jpg" ,
-          "img/photos/alleydog1.jpg"   ,
-          "img/photos/alleydog2.jpg"   ,
-          "img/photos/alleydog3.jpg"   ,
-          "img/photos/bench.jpg"       ,
-          "img/photos/booger1.jpg"     ,
-          "img/photos/booger2.jpg"     ,
-          "img/photos/booger3.jpg"     ,
-          "img/photos/draw-6.jpg"      ,
-          "img/photos/chicken1.jpg"    ,
-          "img/photos/chicken2.jpg"    ,
-          "img/photos/cranes1.jpg"     ,
-          "img/photos/cranes2.jpg"     ,
-          "img/photos/cranes3.jpg"     ,
-          "img/photos/deadbird.jpg"    ,
-          "img/photos/deadcat1.jpg"    ,
-          "img/photos/deadcat2.jpg"    ,
-          "img/photos/deadcat3.jpg"    ,
-          "img/photos/dock1.jpg"       ,
-          "img/photos/dock2.jpg"       ,
-          "img/photos/dock3.jpg"       ,
-          "img/photos/dock4.jpg"       ,
-          "img/photos/dock5.jpg"       ,
-          "img/photos/dock6.jpg"       ,
-          "img/photos/window.jpg"      ,
-          "img/photos/draw-2.jpg"      ,
-          "img/photos/draw-3.jpg"      ,
-          "img/photos/draw-14.jpg"     , 
-          "img/photos/pig1.jpg"        , 
-          "img/photos/pig2.jpg"        , 
-          "img/photos/pig3.jpg"        , 
-          "img/photos/pig4.jpg"        , 
-          "img/photos/rat1.jpg"        , 
-          "img/photos/rat2.jpg"        , 
-          "img/photos/roomcat1.jpg"    , 
-          "img/photos/roomcat2.jpg"    , 
-          "img/photos/roomcat3.jpg"    , 
-          "img/photos/roomcat4.jpg"    , 
-          "img/photos/roomcat5.jpg"    , 
-          "img/photos/suckspig1.jpg"   , 
-          "img/photos/suckspig2.jpg"   , 
-          "img/photos/trashcan1.jpg"   , 
-          "img/photos/trashcan2.jpg"   , 
-          "img/photos/trashcan3.jpg"   , 
-          "img/photos/trashcan4.jpg"   , 
-          "img/photos/trashcan5.jpg"   , 
-          "img/photos/trashcan6.jpg"   , 
-          "img/photos/trashcan7.jpg"   , 
-          "img/photos/trashcan8.jpg"   , 
-          "img/photos/trashcan9.jpg"   , 
-          "img/photos/tvcat1.jpg"      , 
-          "img/photos/tvcat2.jpg"      , 
-          "img/photos/weirdguy1.jpg"   , 
-          "img/photos/weirdguy2.jpg"   , 
-          "img/photos/weirdguy3.jpg" 
-      ];  
+			const imgs = document.getElementById('imgs');
+			const lBtn = document.getElementById('left');
+			const rBtn = document.getElementById('right');
+			const hammer = new Hammer(imgs);
+			
+			const cont = document.getElementById('container')
+			const imgw = cont.clientWidth; // set width of images
+			let w = 0;      // to add width for num of images to image ul
+			let rPosition = 0;
 
-    
-      
-    	var w = 0;      // to add width for num of images to image ul
-      var imgw = 320; // set width of images
-      var len = scanner.length; // get num of images
-      
-      //called when orientation changes, recalculate the container ul for images and reset CSS
-      $( window ).on( "orientationchange", function( event ) {
-           $('.ui-page').css('min-height','0');  // again remove jquery mobile bullshit
-           
-           // get current position of image ul
-           var r = $('ul#imgs').css('right'); 
-           r = r.substring(0, r.length-2);
-           w = 0;
-           
-           // get window orientation and reset CSS, image width, ul width
-           var wo = window.orientation;
-           if (wo == 90 || wo == -90) {
-             imgw = 568;
-             r = (r/320)*568;
-             $('ul#imgs').animate({
-               right:r+'px'
-             }, 250);
-           } else {
-             imgw = 320;
-             r = (r/568)*320;
-             $('ul#imgs').animate({
-               right:r+'px'
-             }, 250);
-           }
-           
-         	for(i = 0; i < len; i++){
-         		w += imgw;  		
-         	}
-          
-          //set with of ul
-          $('ul#imgs').css({width:w});  
-           
-       });
-     
- 
-       // calculate width of image ul
-    	for(i = len - 1; i >= 0; i--){
-    		w += imgw;  
-  		  $('ul#imgs').append('<li><div class="img"><img src="'+scanner[i]+'" /></div></li>');
-		
-    	}
-		
-      // set width of image ul on page load and move the ul all the way to the left
-    	$('ul#imgs').css({width:w, right:w-imgw});  
+			/* set up images */
+			for (let i = scanner.length - 1; i >= 0; i--) {
+				w += imgw;
+				const imgElem = document.createElement('div');
+				imgElem.classList.add('img');
+				const img = new Image();
+				img.src = scanner[i];
+				img.style.width = imgw + 'px';
+				img.addEventListener('dragstart', (ev) => {
+					ev.preventDefault();
+				}); // https://stackoverflow.com/questions/26820656/hammer-js-swipe-event-not-working-on-images
+				imgElem.appendChild(img);
+				imgs.appendChild(imgElem);
+			}
 
+			// set width of image ul on page load and move the ul all the way to the left
+			imgs.style.width = w + 'px';
+			imgs.style.height = cont.clientHeight - 110 + 'px';
+			rPosition = w - imgw;
+			imgs.style.right = rPosition + 'px'
 
-      //hide left at beginning
-      $('#right img').css('opacity', '0');
-      
-      // when user makes right swipe motion, move the image ul to the right to see next image
-      $('ul#imgs').on('swiperight', swiperighthandler);
-      $('#left').on('click', swiperighthandler);
-      function swiperighthandler( event ) { 
-        if ($(':animated').length < 1) {
-          var r = $('ul#imgs').css('right');  
-          r = r.substring(0, r.length-2); // gets current place of image ul
-          if (r <= imgw) $('#left img').css('opacity', '0');
-          else $('#right img').css('opacity', '1');
-          if (r > 0) {
-              $('ul#imgs').animate({
-              right:'-='+imgw+'px'  // animates to next image
-              }, 250);
-          } 
-        }  
-      }
-      
-        // when user makes left swipe motion, move the image ul to the left to see next image
-      $('ul#imgs').on('swipeleft', swipelefthandler);
-      $('#right').on('click', swipelefthandler);
-      function swipelefthandler() {
-        if ($(':animated').length < 1) {
-          var r = $('ul#imgs').css('right');
-          r = r.substring(0, r.length-2);
-          if (r >= w - 2*imgw) $('#right img').css('opacity', '0');
-          else $('#left img').css('opacity', '1');
-          if (r < w - imgw) {
-            $('ul#imgs').animate({
-            right:'+='+imgw+''
-            }, 250);
-          } 
-        }
-      }
+			//hide left at beginning
+			rBtn.style.opacity = 0;
 
-    });
+			// when user makes right swipe motion, move the image ul to the right to see next image
+			function swipeHandler(dir) {
+				console.log(rPosition);
+				if (dir == 4) { // left
+					if (rPosition <= imgw)
+						lBtn.style.opacity = 0;
+					else
+						rBtn.style.opacity = 1;
+					if (rPosition > 0) {
+						rPosition -= imgw;
+						imgs.style.right = rPosition + 'px';
+					}
+				} else if (dir == 2) { // right
+					console.log(rPosition, imgw);
+					if (rPosition >= w - 2 * imgw)
+						rBtn.style.opacity = 0;
+					else 
+						lBtn.style.opacity = 1;
+					if (rPosition < w - imgw) {
+						rPosition += imgw;
+						imgs.style.right = rPosition + 'px';
+					}
+				}
+			}
+			hammer.on('swipe', (ev) => {
+				swipeHandler(ev.direction);
+			});
+			lBtn.addEventListener('click', () => swipeHandler(4));
+			lBtn.addEventListener('tap', () => swipeHandler(4));
+			rBtn.addEventListener('click', () => swipeHandler(2));
+			rBtn.addEventListener('tap', () => swipeHandler(2));
+
+			
+			function orientationChange() {
+
+				var r = imgs.style.right;
+				r = r.substring(0, r.length - 2);
+				w = 0;
+
+				// get window orientation and reset CSS, image width, ul width
+				var wo = window.orientation;
+				console.log(wo);
+				if (wo == 90 || wo == -90) {
+					imgw = 568;
+					r = (r / 320) * 568;
+					imgs.style.right = r + 'px'; // animate r with css
+				} else {
+					imgw = 320;
+					r = ( r / 568) * 320;
+					imgs.style.right = r + 'px'; // animate r with css
+				}
+
+				for (let i = 0; i < scanner.length; i++) {
+					w += imgw;
+				}
+
+				imgs.style.width = w + 'px';
+			}
+			window.addEventListener('orientationchange', orientationChange);
+
+		}
+		window.addEventListener('load', init);
     </script>
-  
-
-  
-    
-
-
 </body>
+</html>

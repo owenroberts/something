@@ -1,0 +1,96 @@
+/* sets up portrait container for photos */
+body {
+	height: 100%;
+	opacity:0;
+}
+
+div#container {
+	position:relative;
+	width: 100%;
+	overflow:hidden;  
+	height: 100%;
+	background: white;
+}
+
+img {
+	padding:0;
+	margin:0;
+}
+
+header {
+	margin:0 auto;
+	width:160px;
+}
+
+header img { width:100%; }
+
+#imgs {
+	padding:0;
+	margin:0;
+	height: 100%;
+	position:relative;
+	right:0;
+	transition: right 500ms;
+}
+
+#imgs .img {
+	text-align:center;
+	height:100%;
+	display: inline-block;
+}
+.img img {
+	vertical-align: middle;
+}
+
+#left {
+	vertical-align:bottom;
+	width:50px;
+	height:50px;
+	position:absolute;
+	bottom:40px;
+	left:0;
+	z-index:999;
+}
+
+#right {
+	position:absolute;
+	width:50px;
+	height:50px;
+	bottom:40px;
+	right:0;
+	z-index:999;
+}
+
+#right img, #left img { width:100%; }
+
+/* separated so the images size appropriately given orientation */
+@media screen and (orientation:portrait) {
+	#home { display:block; }
+	header {  display:block; }
+}
+
+/* change image orienation */
+@media screen and (orientation:landscape) and (max-width:600px) {
+	
+	body { /*height:320px; */ }
+	header { display:none; }
+	ul#imgs { /*height:320px;*/ }
+	#home { display:none; }    
+
+	div#container {
+		/*width:568px;
+		height:320px;*/
+	} 
+
+	#imgs .img {
+		/*width:568px;
+		height:320px;*/
+		text-align:center;
+		overflow:hidden;
+	}
+
+	#imgs .img { vertical-align:top; }
+	.img img { vertical-align: top; /*height:320px;*/ }
+
+
+}
