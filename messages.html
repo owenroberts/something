@@ -4,7 +4,6 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
-	<link rel="stylesheet" type="text/css" href="css/index.css">
 	<script type="text/javascript" src="js/mobile-check.js"></script>
 	<script type="text/javascript" src="js/device-check.js"></script>
 	<script type="text/javascript" src="js/dragscroll.js"></script>
@@ -13,6 +12,11 @@
 		body {
 			opacity:0;
 			background:white;
+		}
+
+		#container { 
+			text-align:center; 
+			background: white;
 		}
 
 		img#send {
@@ -26,6 +30,7 @@
 			padding:3px 12px;
 			opacity:0;
 		}
+		img { zoom:0.5; }
 		div.msg img { zoom:0.6; }
 		.left {  text-align: left; }
 		.right { text-align: right; }
@@ -47,6 +52,11 @@
 			document.body.classList.add('fade-in');
 			var level = parseInt(localStorage.getItem('gamestate'));
 			const isMobile = (localStorage.getItem('isMobile') === 'true');
+
+			/* pop up stuff */
+			if (!isMobile) {
+				window.opener.postMessage({'loaded': true, 'src': 'messages'}, '*');
+			}
 
 			// appCount is apps opened
 			// apps is number of apps to be opened i guess

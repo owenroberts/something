@@ -27,11 +27,28 @@
 			for (var i = 0; i < 10; i++) {
 				localStorage.setItem(i, 'green');
 			}
+			let params = `scrollbars=no,status=no,toolbar=no,menubar=no,width=375,height=667,top=200,left=300`;
 
-			document.getElementById('lost').classList.add('fade-out');
-			setTimeout( function(){
-				location.href = "messages.html";
-			}, 1000);
+			function launch() {
+				launchBtn.classList.add('fade-out');
+				setTimeout( function(){
+					// location.href = "messages.html";
+					window.open('messages.html', '_blank', params);
+				}, 1000);
+			};
+			const launchBtn = document.getElementById('lost');
+			launchBtn.addEventListener('click', launch);
+			launchBtn.addEventListener('tap', launch);
+
+			/* pop up */
+			window.addEventListener('message', (ev) => {
+				console.log(ev);
+				if (ev.data.src == 'messages' && !ev.data.loaded) {
+					launchBtn.classList.remove('fade-out');
+					alert('Please allow popups on your browser to experience Something Ave.  Thanks :)');
+				}
+			});
+
 		}
 
 		window.addEventListener('load', init);

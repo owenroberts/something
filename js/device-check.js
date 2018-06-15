@@ -12,3 +12,10 @@ function deviceCheck() {
 
 }
 window.addEventListener('load', deviceCheck);
+
+function resizeHandler(ev) {
+	ev.preventDefault();
+	// alert(`please don't resize`);
+	window.resizeTo(375, 667);
+}	
+window.addEventListener('resize', resizeHandler);

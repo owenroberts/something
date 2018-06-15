@@ -8,13 +8,13 @@ html, body {
 }
 
 body {
-	-webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
-	-webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
-	-webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-	font-family:Monaco, sans-serif;
-	font-size:18px;
-	margin:0px;
-	padding:0px;
+	-webkit-touch-callout: none;/* prevent callout to copy image, etc when tap to hold */
+	-webkit-text-size-adjust: none;/* prevent webkit from resizing text to fit */
+	-webkit-user-select: none;  /* prevent copy paste, to allow, change 'none' to 'text' */
+	font-family: Monaco, sans-serif;
+	font-size: 18px;
+	margin: 0px;
+	padding: 0px;
 }
 
 div#container {
@@ -84,7 +84,7 @@ div#back {
 	padding: 2em;
 }
 
-@media screen and (orientation:landscape) {
+@media screen and (orientation:landscape) and (max-width: 400px) {
 	#orientation-blocker {
 		display: block;
 	}
@@ -117,20 +117,9 @@ div#back {
 
 /* desktop stuff */
 body.desktop {
-	background-color: lightgray;
-	box-sizing: border-box;
 	width: 375px;
 	height: 667px;
-	margin: 4em auto; 
-	border: 1px solid gray;
-	border-radius: 0.5em;
-	padding:1em;
-}
-body.desktop::after {
-	content: 'best viewed on mobile device';
-	position: absolute;
-	bottom: 4em;
-	text-align: center;
+	overflow: hidden;
 }
 
 #container.desktop {

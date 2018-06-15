@@ -9,3 +9,20 @@ div#lost {
 	position:relative;
 	top:100px;
 }
+
+body.desktop {
+	background-color: lightgray;
+	box-sizing: border-box;
+	width: 375px;
+	height: 667px;
+	margin: 4em auto; 
+	border: 1px solid gray;
+	border-radius: 0.5em;
+	padding:1em;
+}
+body.desktop::after {
+	content: 'best viewed on mobile device';
+	position: absolute;
+	bottom: 4em;
+	text-align: center;
+}
