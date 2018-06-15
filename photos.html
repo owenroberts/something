@@ -99,7 +99,7 @@
 			const hammer = new Hammer(imgs);
 			
 			const cont = document.getElementById('container')
-			const imgw = cont.clientWidth; // set width of images
+			let imgw = cont.clientWidth; // set width of images
 			let w = 0;      // to add width for num of images to image ul
 			let rPosition = 0;
 
@@ -108,19 +108,22 @@
 				w += imgw;
 				const imgElem = document.createElement('div');
 				imgElem.classList.add('img');
+				const imgCont = document.createElement('div');
+				imgCont.classList.add('img-container');
 				const img = new Image();
 				img.src = scanner[i];
 				img.style.width = imgw + 'px';
 				img.addEventListener('dragstart', (ev) => {
 					ev.preventDefault();
 				}); // https://stackoverflow.com/questions/26820656/hammer-js-swipe-event-not-working-on-images
-				imgElem.appendChild(img);
+				imgCont.appendChild(img);
+				imgElem.appendChild(imgCont);
 				imgs.appendChild(imgElem);
 			}
 
 			// set width of image ul on page load and move the ul all the way to the left
 			imgs.style.width = w + 'px';
-			imgs.style.height = cont.clientHeight - 110 + 'px';
+			/*imgs.style.height = cont.clientHeight - 110 + 'px';*/
 			rPosition = w - imgw;
 			imgs.style.right = rPosition + 'px'
 
@@ -129,7 +132,6 @@
 
 			// when user makes right swipe motion, move the image ul to the right to see next image
 			function swipeHandler(dir) {
-				console.log(rPosition);
 				if (dir == 4) { // left
 					if (rPosition <= imgw)
 						lBtn.style.opacity = 0;
@@ -140,7 +142,6 @@
 						imgs.style.right = rPosition + 'px';
 					}
 				} else if (dir == 2) { // right
-					console.log(rPosition, imgw);
 					if (rPosition >= w - 2 * imgw)
 						rBtn.style.opacity = 0;
 					else 
@@ -168,14 +169,13 @@
 
 				// get window orientation and reset CSS, image width, ul width
 				var wo = window.orientation;
-				console.log(wo);
 				if (wo == 90 || wo == -90) {
-					imgw = 568;
-					r = (r / 320) * 568;
+					imgw = cont.clientWidth;
+					r = (r / cont.clientHeight) * imgw;
 					imgs.style.right = r + 'px'; // animate r with css
 				} else {
-					imgw = 320;
-					r = ( r / 568) * 320;
+					imgw = cont.clientHeight;
+					r = ( r / cont.clientHeight) * cont.clientWidth;
 					imgs.style.right = r + 'px'; // animate r with css
 				}
 
