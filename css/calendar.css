@@ -1,0 +1,60 @@
+body { position: relative; }
+img {
+	width: 100%;
+	vertical-align: middle;
+}
+
+div#container {
+	height: calc(100% - 50px);
+	background: white;
+	position: relative;
+}
+
+#months {
+	overflow: hidden;
+}
+
+#header {
+	width:100%;
+	z-index:1;
+}
+
+#header img {
+	margin-top:0;
+}
+
+.month {
+	width:100%;
+	position:relative;
+	overflow-x: hidden;
+	margin-bottom: 20px;
+}
+
+.target { position:absolute; }
+
+#day {
+	position: absolute;
+	z-index: 9;
+	padding-top: 20px;
+	background: white;
+	height: 100%;
+	left: 100%;
+	top: 0;
+	bottom: 0;
+	transition: left 500ms;
+	width: 100%;
+
+/*	width:100%;
+	
+	
+	overflow:scroll;
+	top:40px; 
+	
+	z-index:1;
+	min-height:100%;
+	background-color:white;
+*/
+	
+}
+
+/*#day img { float:left; }*/
