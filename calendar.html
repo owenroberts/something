@@ -185,6 +185,7 @@
 		function init() {
 			document.body.classList.add('fade-in');
 			localStorage["appCount"]++;
+			const isMobile = (localStorage.getItem('isMobile') === 'true');
 			document.getElementById('container').classList.remove('dragscroll');
 			document.getElementById('months').classList.add('dragscroll');
 			document.getElementById('home').onclick = function() {
@@ -194,7 +195,15 @@
 			// scroll to january 2014
 
 			// $("html, body").animate({ scrollTop: $('#jan14').offset().top}, 400);
-			document.getElementById('container').scrollTop = document.getElementById('jan14').offsetTop;
+			
+			if (isMobile) {
+				setTimeout(function() {
+					document.body.scrollTop = document.getElementById('jan14').offsetTop;
+				}, 50);
+			} else {
+				
+				document.getElementById('container').scrollTop = document.getElementById('jan14').offsetTop;
+			}
 
 			// when red date is clicked, animate the calendar image for that day
 			const targets = document.getElementsByClassName('target');

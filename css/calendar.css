@@ -8,6 +8,7 @@ div#container {
 	height: calc(100% - 50px);
 	background: white;
 	position: relative;
+	top: 50px;
 }
 
 #months {
@@ -26,7 +27,8 @@ div#container {
 
 #header {
 	width:100%;
-	z-index:1;
+	position: fixed;
+	z-index:2;
 }
 
 #header img {
@@ -63,4 +65,8 @@ div#container {
 	bottom:40px;
 	right:10px;
 	z-index:999;
+}
+
+body.desktop #home {
+	top: 0;
 }
