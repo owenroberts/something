@@ -17,7 +17,10 @@
 	</div>
 	<div id="container">
 		<div id="day">
-			<img id="day-img" src="/img/calendar/jan31.jpg" />
+			<img id="day-img" src="/img/calendar/jan31.jpg">
+			<div id="right">
+				<img src="img/photos/right.jpg" />
+			</div>
 		</div>
 		<div id="orientation-blocker">
 			Please view in portrait orientation :)
@@ -184,9 +187,14 @@
 			localStorage["appCount"]++;
 			document.getElementById('container').classList.remove('dragscroll');
 			document.getElementById('months').classList.add('dragscroll');
+			document.getElementById('home').onclick = function() {
+				location.href = 'home.html';
+			}
 
 			// scroll to january 2014
+
 			// $("html, body").animate({ scrollTop: $('#jan14').offset().top}, 400);
+			document.getElementById('container').scrollTop = document.getElementById('jan14').offsetTop;
 
 			// when red date is clicked, animate the calendar image for that day
 			const targets = document.getElementsByClassName('target');
@@ -194,7 +202,6 @@
 			dayImg.addEventListener('dragstart', (ev) => {
 				ev.preventDefault();
 			});
-			console.log(dayImg);
 			const day = document.getElementById('day');
 			const hammer = new Hammer(day);
 			for (let i = 0; i < targets.length; i++) {
@@ -206,12 +213,15 @@
 				targets[i].addEventListener('click', openDay);
 			}
 
-			function swipeHandler(ev) {
-				if (ev.direction == 4) {
-					day.style.left = '100%';
-				}
+			function closeDay() {
+				day.style.left = '100%';
 			}
-			hammer.on('swipe', swipeHandler);
+			hammer.on('swipe', (ev) => {
+				if (ev.direction == 4)
+					closeDay();
+			});
+			document.getElementById('right').addEventListener('tap', closeDay);
+			document.getElementById('right').addEventListener('click', closeDay);
 		}
 		window.addEventListener('load', init);
   </script>

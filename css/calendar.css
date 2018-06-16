@@ -14,6 +14,16 @@ div#container {
 	overflow: hidden;
 }
 
+#months, #day {
+	cursor: -webkit-grab;
+	cursor: grab;
+}
+
+#months:active, #day:active {
+	cursor: -webkit-grabbing;
+	cursor: grabbing;
+}
+
 #header {
 	width:100%;
 	z-index:1;
@@ -33,7 +43,7 @@ div#container {
 .target { position:absolute; }
 
 #day {
-	position: absolute;
+	position: fixed;
 	z-index: 9;
 	padding-top: 20px;
 	background: white;
@@ -44,17 +54,13 @@ div#container {
 	transition: left 500ms;
 	width: 100%;
 
-/*	width:100%;
-	
-	
-	overflow:scroll;
-	top:40px; 
-	
-	z-index:1;
-	min-height:100%;
-	background-color:white;
-*/
-	
 }
 
-/*#day img { float:left; }*/
+#right {
+	position:absolute;
+	width:50px;
+	height:50px;
+	bottom:40px;
+	right:10px;
+	z-index:999;
+}

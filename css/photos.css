@@ -39,14 +39,16 @@ header img { width:100%; }
 
 #imgs .img {
 	text-align:center;
-/*	height:100%;*/
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	position: relative;
+	top: -20px;
 }
 
 .img-container img {
 	vertical-align: middle;
+
 }
 
 #left {

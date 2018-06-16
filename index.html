@@ -27,7 +27,11 @@
 			for (var i = 0; i < 10; i++) {
 				localStorage.setItem(i, 'green');
 			}
-			let params = `scrollbars=no,status=no,toolbar=no,menubar=no,width=375,height=667,top=200,left=300`;
+			const left = screen.width/2 - 375/2;
+			const top = screen.height/2 - 667/2;
+			let params = `scrollbars=no,status=no,toolbar=no,menubar=no,width=375,height=667,top=${top},left=${left}`;
+
+
 
 			function launch() {
 				launchBtn.classList.add('fade-out');
