@@ -53,13 +53,16 @@
 				name.appendChild(nameImg);
 				message.appendChild(name);
 
+				const audioWrap = document.createElement('div');
+				audioWrap.classList.add('audio-wrap');
+
 				const play = document.createElement('div');
 				play.classList.add('play');
 				play.id = 'play-' + voicemails[i];
 				const playImg = new Image();
 				playImg.src = '/img/phone/' + voicemails[i] + '-play.jpg';
 				play.appendChild(playImg);
-				message.appendChild(play);
+				audioWrap.appendChild(play);
 
 				const audio = new Audio('/audio/' + voicemails[i] + '.mp3');
 				const sound = document.createElement('div');
@@ -71,7 +74,9 @@
 				const soundImg = new Image();
 				soundImg.src = '/img/phone/' + voicemails[i] + '-sound.jpg';
 				sound.appendChild(soundImg);
-				message.appendChild(sound);
+				audioWrap.appendChild(sound);
+
+				message.appendChild(audioWrap);
 
 				function openMail() {
 

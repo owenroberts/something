@@ -3,7 +3,7 @@
 	background: white;
 }
 
-img { zoom:0.5; }
+img { width: 100%; }
 
 div#lost {
 	position:relative;
@@ -13,7 +13,6 @@ div#lost {
 #splash {
 	background:#F8F8F8;
 	width:320px;
-	
 	position:absolute;
 	z-index:99;
 }

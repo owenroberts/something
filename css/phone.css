@@ -24,21 +24,24 @@ div#voicemails {
 div#voicemails img {
 	width:inherit;
 }
+
+
    
 div.name img {
 	width:100%;
 }
 
+.audio-wrap {
+	display: flex;
+}
+
+
 div.play img, div.sound img {
-	width:auto;
-	zoom:0.5;
+	width: 100%;
 }
   
-  
-  /* relationship between div.sound, div.play, div.ov, and theimages is important  and only works this way */
 div.sound, div.play {
 	position:relative;
-	/*float:left;*/
 	transition: height 400ms;
 	height: 0;
 	overflow: hidden;
