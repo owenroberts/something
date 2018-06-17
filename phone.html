@@ -29,7 +29,7 @@
 
 		function init() {
 			document.body.classList.add('fade-in');
-			const homeBtn = document.getElementById('maps-home');
+			const homeBtn = document.getElementById('home');
 			function goHome() {
 				location.href = '/home.html';
 			}
@@ -102,24 +102,20 @@
 				name.addEventListener('click', openMail);
 				name.addEventListener('tap', openMail);
 				
-
+				let audioVisualInterval;
 				play.onclick = function() {
 					audio.play();
+					audioVisualInterval =  setInterval(updateVisual, 1000 / 60);
 				}
 
-				// update audio visual
-				audio.addEventListener('timeupdate', function() {
-					const len = audio.duration;
-					const ovw = sound.clientWidth;
-					const w = audio.currentTime / len;
-					ov.style.left = Math.floor(w * ovw) + 'px';
-				})
-
+				function updateVisual() {
+					ov.style.left = Math.floor((audio.currentTime / audio.duration) * sound.clientWidth) + 'px';
+					if (audio.currentTime == audio.duration) {
+						clearInterval(audioVisualInterval);
+					}
+				}
 				cont.appendChild(message);
 			}
-
-
-
 		}
 		window.addEventListener('load', init);
     

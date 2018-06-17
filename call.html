@@ -1,123 +1,101 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    
-    <link rel="stylesheet" type="text/css" href="css/main.css" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script type="text/javascript" src="js/mobile-check.js"></script>
+	<script type="text/javascript" src="js/device-check.js"></script>
+	<title>phone call</title>
     <style type="text/css">
+    	body { background: black; }
+		#splash {
+			text-align:center;
+			background: black;
+		}
 
-    #splash {
-      text-align:center;
-      opacity:0;
-    }
+		#call-from {
+			margin:120px 0;
+			width:300px;
+			height: 0;
+			transition: height 500ms;
+		}
 
-    #call-from {
-      margin:120px 0;
-      width:300px;
-    }
-    #end {
-      margin:80px 40px;
-      width:60px;
-    }
-    #pickup {
-      margin:80px 40px;
-      width:60px;
-    }
-    #pic {
-      display:none;
-      margin:40px 0;
-    }
+		#end {
+			margin:80px 40px;
+			width:60px;
+		}
 
+		#pickup {
+			margin:80px 40px;
+			width:60px;
+			height: auto;
+			transition: height 500ms;
+		}
+
+		#pic {
+			margin:40px 0;
+			height: 0;
+			transition: height 500ms;
+		}
     </style>
-    
-    <title>lostly</title>
-        
 </head>
 
-<body style="background:black">
-  <div id="splash" style="background:black">
-      <img id="call-from" src="img/call/call-from.png"  alt="Call From">
-      <img id="pic" src="img/call/snow.png">
-      <img id="end" src="img/call/end.png" alt="End">
-      <img id="pickup" src="img/call/pickup.png" alt="Pickup">
-  </div>
-  <audio id="ring" >
-    <source src="audio/ring.mp3" type="audio/mpeg" />
-  </audio>
-  <audio id="snow" >
-    <source src="audio/snow.mp3" type="audio/mpeg" />
-  </audio>
-  
+<body>
+	<div id="container">
+		<div id="splash" class="fade-hidden fade-short">
+			<img id="call-from" src="img/call/call-from.png"  alt="Call From" >
+			<img id="pic" src="img/call/snow.png">
+			<br>
+			<img id="end" src="img/call/end.png" alt="End">
+			<img id="pickup" src="img/call/pickup.png" alt="Pickup">
+		</div>
+	</div>
+	<audio id="ring" >
+		<source src="audio/ring.mp3" type="audio/mpeg" />
+	</audio>
+	<audio id="snow" >
+		<source src="audio/snow.mp3" type="audio/mpeg" />
+	</audio>
+	<script type="text/javascript">
+		function init() {
+			const splash = document.getElementById('splash');
+			splash.classList.add('fade-in');
 
+			document.getElementById('call-from').style.height = '100px';
 
-  <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/fastclick.js" type="text/javascript" charset="utf-8"></script>
-  <script type="text/javascript">
-  function shouldRotateToOrientation(orientation) {
-    switch (orientation) {
-            //Portrait or PortraitUpsideDown
-            case 0:
-            case 180:
-                return true;
-            //LandscapeRight or LandscapeLeft
-            case 90:
-            case -90:
-                 return false;
-        }
-  }
-  setTimeout(function(){
-    shouldRotateToOrientation(orientation)
-  }, 0);
-  
-  $(document).ready( function() {
-    
-    $(function() {
-        FastClick.attach(document.body);
-    });
-    
-    $('#splash').animate({
-      opacity:1
-    }, 300);
-   
-    
-    $('#splash-img').animate({
-      opacity:1
-    }, 300);
-    
-    var ring = document.getElementById('ring');
-    var snow = document.getElementById('snow');
-    ring.play();
-    
-    $('#end').on('click', function() {
-      $('#splash').animate({
-        opacity:0
-      }, 300, function() {
-        location.href = "home.html";
-      });
-    });
-    
-    $('#pickup').on('click', function() {
-      ring.pause();
-      $('#call-from').slideUp();
-      $('#pickup').slideUp();
-      $('#pic').slideDown();
-      snow.play();
-      $('#snow').on('ended', function() {
-        $('#splash').animate({
-        opacity:0
-        }, 300, function() {
-          location.href = "home.html";
-        });
-      });
-    });
-    
-    
+			var ring = document.getElementById('ring');
+			var snow = document.getElementById('snow');
+			ring.play();
 
-    
-  });
-  </script>
-  
+			snow.addEventListener('ended', endCall);
+
+			const endBtn = document.getElementById('end');
+			function endCall() {
+				splash.classList.remove('fade-in');
+				setTimeout(() => {
+					location.href = 'home.html'
+				}, 500);
+			}
+			endBtn.addEventListener('click', endCall);
+			endBtn.addEventListener('tap', endCall);
+
+			const pickupBtn = document.getElementById('pickup');
+			function pickUpCall() {
+				ring.pause();
+				snow.play();
+				// document.getElementById('call-from').style.height = 0;
+				document.getElementById('call-from').style.display = 'none';
+				pickupBtn.style.display = 'none';
+				pickupBtn.style.height = 0;
+				document.getElementById('pic').style.height = '200px';
+				
+
+			}
+			pickupBtn.addEventListener('click', pickUpCall);
+			pickupBtn.addEventListener('tap', pickUpCall);
+		}
+		window.addEventListener('load', init);
+	</script>
 </body>
 </html>

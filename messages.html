@@ -20,15 +20,16 @@
 		}
 
 		img#send {
-			position: relative;
+			position: fixed;
 			top: 500px;
+			left: calc(50% - 130px);
 		}
 
 		div.msg {   
-			position:relative;
-			display:block;    
-			padding:3px 12px;
-			opacity:0;
+			position: relative;
+			display: block;    
+			padding: 3px 12px;
+			opacity: 0;
 		}
 		img { zoom:0.5; }
 		div.msg img { zoom:0.6; }
@@ -91,7 +92,6 @@
 			];
 
 			var links = ['maps.html', 'notes.html'];  // where to go at end of each "level" 
-			const homeBtn = document.getElementById('home');
 			const cont = document.getElementById('container');
 
 			const homeBtn = document.getElementById('home');
