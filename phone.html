@@ -55,6 +55,7 @@
 
 				const audioWrap = document.createElement('div');
 				audioWrap.classList.add('audio-wrap');
+				audioWrap.id = 'wrap-' + voicemails[i];
 
 				const play = document.createElement('div');
 				play.classList.add('play');
@@ -79,28 +80,23 @@
 				message.appendChild(audioWrap);
 
 				function openMail() {
-
 					if (!openMailId) {
-						play.classList.add('slide-down');
-						sound.classList.add('slide-down');
+						audioWrap.classList.add('slide-down');
 						openMailId = voicemails[i];
 					} else if (openMailId == voicemails[i]) {
 						if (!audio.paused) {
 							audio.pause();
 							audio.currentTime = 0;
 						}
-						play.classList.remove('slide-down');
-						sound.classList.remove('slide-down');
+						audioWrap.classList.remove('slide-down');
 						openMailId = '';
 					} else {
 						if (!audio.paused) {
 							audio.pause();
 							audio.currentTime = 0;
 						}
-						play.classList.add('slide-down');
-						sound.classList.add('slide-down');
-						document.getElementById('play-' + openMailId).classList.remove('slide-down');
-						document.getElementById('sound-' + openMailId).classList.remove('slide-down');
+						audioWrap.classList.add('slide-down');
+						document.getElementById('wrap-' + openMailId).classList.remove('slide-down');
 						openMailId = voicemails[i];
 					}
 				}

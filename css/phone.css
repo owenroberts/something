@@ -1,5 +1,5 @@
 body { opacity:0; }
-img { /*float:left; */ } /* fix this */
+
 #container {
 	padding-bottom:100px;
 	background: white;
@@ -12,8 +12,7 @@ header {
 
 div#voicemails {
 	width: 100%;
-/*	width:320px;
-	float:left;*/
+
 }
 
 .msg {
@@ -24,8 +23,6 @@ div#voicemails {
 div#voicemails img {
 	width:inherit;
 }
-
-
    
 div.name img {
 	width:100%;
@@ -33,19 +30,21 @@ div.name img {
 
 .audio-wrap {
 	display: flex;
+	height: 0;
+	transition: height 500ms;
 }
 
-
-div.play img, div.sound img {
+div.sound img {
 	width: 100%;
+}
+div.play img {
+	width: 100%;
+	height: 100%;
 }
   
 div.sound, div.play {
 	position:relative;
-	transition: height 400ms;
-	height: 0;
 	overflow: hidden;
-	display: inline-block;
 }
 
 div.slide-down {
