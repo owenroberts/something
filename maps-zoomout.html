@@ -1,124 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-    
-    <link rel="stylesheet" type="text/css" href="css/main.css" />
-    <style type="text/css">
-    
-      body {
-        width:100%;
-        height:100%;
-        padding:0;  
-        overflow: hidden;
-        overflow-y: scroll !important;
-        -webkit-overflow-scrolling: touch;
-      }
-        
-      div.rect {        
-        width:256px;
-        height:175px;
-        background-color:lightblue;
-        text-align:center;
-        float:left;
-              
-      }
-      
-      div.rect:after {
-        content: "image loading...";
-      }
-      
-      #map img {
-        width:256px;
-        display:inline;
-        padding:0;
-        margin:0;   
-      }
-      
-      .red {
-        background-color:rgba(255,0,150,0.5);
-      }
-      
-    #maps-home {
-      position:fixed;
-      bottom:0;
-      left:0;
-      top:530px;
-      right:0;
-      z-index:99;
-      background-color:rgba(255,255,255,0.8);
-      background-image:url(img/backbtn1.png); 
-      background-repeat:no-repeat;
-      background-size:25%;
-      background-position:50% 0;
-    }
-
-      #zoom {
-        background-color:rgba(255,255,255,0.5);
-        position:fixed;
-        top:5px;
-        right:5px;
-        z-index:99;
-        width:40px;
-        height:40px;
-      }
-      #zoom img {
-        width:30px;
-      }
-      
-  
-    </style>
-    
-    <title>lostly</title>
-    
+	<meta charset="utf-8">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+	<link rel="stylesheet" type="text/css" href="css/main.css" />
+	<link rel="stylesheet" type="text/css" href="css/maps.css" />
+	<link rel="stylesheet" type="text/css" href="css/map-zoomout.css" />
+	<script type="text/javascript" src="js/mobile-check.js"></script>
+	<script type="text/javascript" src="js/device-check.js"></script>
+	<script type="text/javascript" src="js/dragscroll.js"></script>
+	<title>maps</title>
 </head>
 
-<body>
-  <div id="maps-home"  onclick='location.href="home.html"'>
-  </div>
-  <div id="zoom"><img src="img/maps/zoomin.png" />
-  </div>
+<body class="fade-long fade-hidden">
+	<div id="maps-home"></div>
+	<div id="zoom">
+		<img src="img/maps/zoomin.png">
+	</div>
+	<div id="container">
+		<div id="map">
+    		<div class="rect"><img src="img/maps/sm/b0.jpg"></div><div class="rect"><img src="img/maps/sm/c0.jpg"></div><div class="rect"><img src="img/maps/sm/d0.jpg"></div><div class="rect"><img src="img/maps/sm/e0.jpg"></div><div class="rect"><img src="img/maps/sm/f0.jpg"></div><div class="rect"><img src="img/maps/sm/g0.jpg"></div><div class="rect"><img src="img/maps/sm/h0.jpg"></div><div class="rect"><img src="img/maps/sm/i0.jpg"></div><div class="rect"><img src="img/maps/sm/b1.jpg"></div><div class="rect"><img src="img/maps/sm/c1.jpg"></div><div class="rect"><img src="img/maps/sm/d1.jpg"></div><div class="rect"><img src="img/maps/sm/e1.jpg"></div><div class="rect"><img src="img/maps/sm/f1.jpg"></div><div class="rect"><img src="img/maps/sm/g1.jpg"></div><div class="rect"><img src="img/maps/sm/h1.jpg"></div><div class="rect"><img src="img/maps/sm/i1.jpg"></div><div class="rect"><img src="img/maps/sm/b2.jpg"></div><div class="rect"><img src="img/maps/sm/c2.jpg"></div><div class="rect"><img src="img/maps/sm/d2.jpg"></div><div class="rect"><img src="img/maps/sm/e2.jpg"></div><div class="rect"><img src="img/maps/sm/f2.jpg"></div><div class="rect"><img src="img/maps/sm/g2.jpg"></div><div class="rect"><img src="img/maps/sm/h2.jpg"></div><div class="rect"><img src="img/maps/sm/i2.jpg"></div><div class="rect"><img src="img/maps/sm/b3.jpg"></div><div class="rect"><img src="img/maps/sm/c3.jpg"></div><div class="rect"><img src="img/maps/sm/d3.jpg"></div><div class="rect"><img src="img/maps/sm/e3.jpg"></div><div class="rect"><img src="img/maps/sm/f3.jpg"></div><div class="rect"><img src="img/maps/sm/g3.jpg"></div><div class="rect"><img src="img/maps/sm/h3.jpg"></div><div class="rect"><img src="img/maps/sm/i3.jpg"></div><div class="rect"><img src="img/maps/sm/b4.jpg"></div><div class="rect"><img src="img/maps/sm/c4.jpg"></div><div class="rect"><img src="img/maps/sm/d4.jpg"></div><div class="rect"><img src="img/maps/sm/e4.jpg"></div><div class="rect"><img src="img/maps/sm/f4.jpg"></div><div class="rect"><img src="img/maps/sm/g4.jpg"></div><div class="rect"><img src="img/maps/sm/h4.jpg"></div><div class="rect"><img src="img/maps/sm/i4.jpg"></div><div class="rect"><img src="img/maps/sm/b5.jpg"></div><div class="rect"><img src="img/maps/sm/c5.jpg"></div><div class="rect"><img src="img/maps/sm/d5.jpg"></div><div class="rect"><img src="img/maps/sm/e5.jpg"></div><div class="rect"><img src="img/maps/sm/f5.jpg"></div><div class="rect"><img src="img/maps/sm/g5.jpg"></div><div class="rect"><img src="img/maps/sm/h5.jpg"></div><div class="rect"><img src="img/maps/sm/i5.jpg"></div><div class="rect"><img src="img/maps/sm/b6.jpg"></div><div class="rect"><img src="img/maps/sm/c6.jpg"></div><div class="rect"><img src="img/maps/sm/d6.jpg"></div><div class="rect"><img src="img/maps/sm/e6.jpg"></div><div class="rect"><img src="img/maps/sm/f6.jpg"></div><div class="rect"><img src="img/maps/sm/g6.jpg"></div><div class="rect"><img src="img/maps/sm/h6.jpg"></div><div class="rect"><img src="img/maps/sm/i6.jpg"></div><div class="rect"><img src="img/maps/sm/b7.jpg"></div><div class="rect"><img src="img/maps/sm/c7.jpg"></div><div class="rect"><img src="img/maps/sm/d7.jpg"></div><div class="rect"><img src="img/maps/sm/e7.jpg"></div><div class="rect"><img src="img/maps/sm/f7.jpg"></div><div class="rect"><img src="img/maps/sm/g7.jpg"></div><div class="rect"><img src="img/maps/sm/h7.jpg"></div><div class="rect"><img src="img/maps/sm/i7.jpg"></div><div class="rect"><img src="img/maps/sm/b8.jpg"></div><div class="rect"><img src="img/maps/sm/c8.jpg"></div><div class="rect"><img src="img/maps/sm/d8.jpg"></div><div class="rect"><img src="img/maps/sm/e8.jpg"></div><div class="rect"><img src="img/maps/sm/f8.jpg"></div><div class="rect"><img src="img/maps/sm/g8.jpg"></div><div class="rect"><img src="img/maps/sm/h8.jpg"></div><div class="rect"><img src="img/maps/sm/i8.jpg"></div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		function init() {
+			document.body.classList.add('fade-in');
+			const homeBtn = document.getElementById('maps-home');
+			function goHome() {
+				location.href = '/home.html';
+			}
+			homeBtn.addEventListener('click', goHome);
+			homeBtn.addEventListener('tap', goHome);
+			const isMobile = (localStorage.getItem('isMobile') === 'true');
+			const cont = document.getElementById('container');
 
-  <div id="map" style="width: 2048px; height: 1575px;">
-    <div class="rect"><img src="img/maps/sm/b0.jpg"></div><div class="rect"><img src="img/maps/sm/c0.jpg"></div><div class="rect"><img src="img/maps/sm/d0.jpg"></div><div class="rect"><img src="img/maps/sm/e0.jpg"></div><div class="rect"><img src="img/maps/sm/f0.jpg"></div><div class="rect"><img src="img/maps/sm/g0.jpg"></div><div class="rect"><img src="img/maps/sm/h0.jpg"></div><div class="rect"><img src="img/maps/sm/i0.jpg"></div><div class="rect"><img src="img/maps/sm/b1.jpg"></div><div class="rect"><img src="img/maps/sm/c1.jpg"></div><div class="rect"><img src="img/maps/sm/d1.jpg"></div><div class="rect"><img src="img/maps/sm/e1.jpg"></div><div class="rect"><img src="img/maps/sm/f1.jpg"></div><div class="rect"><img src="img/maps/sm/g1.jpg"></div><div class="rect"><img src="img/maps/sm/h1.jpg"></div><div class="rect"><img src="img/maps/sm/i1.jpg"></div><div class="rect"><img src="img/maps/sm/b2.jpg"></div><div class="rect"><img src="img/maps/sm/c2.jpg"></div><div class="rect"><img src="img/maps/sm/d2.jpg"></div><div class="rect"><img src="img/maps/sm/e2.jpg"></div><div class="rect"><img src="img/maps/sm/f2.jpg"></div><div class="rect"><img src="img/maps/sm/g2.jpg"></div><div class="rect"><img src="img/maps/sm/h2.jpg"></div><div class="rect"><img src="img/maps/sm/i2.jpg"></div><div class="rect"><img src="img/maps/sm/b3.jpg"></div><div class="rect"><img src="img/maps/sm/c3.jpg"></div><div class="rect"><img src="img/maps/sm/d3.jpg"></div><div class="rect"><img src="img/maps/sm/e3.jpg"></div><div class="rect"><img src="img/maps/sm/f3.jpg"></div><div class="rect"><img src="img/maps/sm/g3.jpg"></div><div class="rect"><img src="img/maps/sm/h3.jpg"></div><div class="rect"><img src="img/maps/sm/i3.jpg"></div><div class="rect"><img src="img/maps/sm/b4.jpg"></div><div class="rect"><img src="img/maps/sm/c4.jpg"></div><div class="rect"><img src="img/maps/sm/d4.jpg"></div><div class="rect"><img src="img/maps/sm/e4.jpg"></div><div class="rect"><img src="img/maps/sm/f4.jpg"></div><div class="rect"><img src="img/maps/sm/g4.jpg"></div><div class="rect"><img src="img/maps/sm/h4.jpg"></div><div class="rect"><img src="img/maps/sm/i4.jpg"></div><div class="rect"><img src="img/maps/sm/b5.jpg"></div><div class="rect"><img src="img/maps/sm/c5.jpg"></div><div class="rect"><img src="img/maps/sm/d5.jpg"></div><div class="rect"><img src="img/maps/sm/e5.jpg"></div><div class="rect"><img src="img/maps/sm/f5.jpg"></div><div class="rect"><img src="img/maps/sm/g5.jpg"></div><div class="rect"><img src="img/maps/sm/h5.jpg"></div><div class="rect"><img src="img/maps/sm/i5.jpg"></div><div class="rect"><img src="img/maps/sm/b6.jpg"></div><div class="rect"><img src="img/maps/sm/c6.jpg"></div><div class="rect"><img src="img/maps/sm/d6.jpg"></div><div class="rect"><img src="img/maps/sm/e6.jpg"></div><div class="rect"><img src="img/maps/sm/f6.jpg"></div><div class="rect"><img src="img/maps/sm/g6.jpg"></div><div class="rect"><img src="img/maps/sm/h6.jpg"></div><div class="rect"><img src="img/maps/sm/i6.jpg"></div><div class="rect"><img src="img/maps/sm/b7.jpg"></div><div class="rect"><img src="img/maps/sm/c7.jpg"></div><div class="rect"><img src="img/maps/sm/d7.jpg"></div><div class="rect"><img src="img/maps/sm/e7.jpg"></div><div class="rect"><img src="img/maps/sm/f7.jpg"></div><div class="rect"><img src="img/maps/sm/g7.jpg"></div><div class="rect"><img src="img/maps/sm/h7.jpg"></div><div class="rect"><img src="img/maps/sm/i7.jpg"></div><div class="rect"><img src="img/maps/sm/b8.jpg"></div><div class="rect"><img src="img/maps/sm/c8.jpg"></div><div class="rect"><img src="img/maps/sm/d8.jpg"></div><div class="rect"><img src="img/maps/sm/e8.jpg"></div><div class="rect"><img src="img/maps/sm/f8.jpg"></div><div class="rect"><img src="img/maps/sm/g8.jpg"></div><div class="rect"><img src="img/maps/sm/h8.jpg"></div><div class="rect"><img src="img/maps/sm/i8.jpg"></div></div>
+			localStorage["mapzoom"] = true;
+			function scrollSafe(x, y) {
+				if (isMobile)
+					document.body.scrollTo(x, y);
+				else
+					document.getElementById('container').scrollTo(x, y);
+			}
+			const pos = [+localStorage.getItem('ex'), +localStorage.getItem('why')];
+			scrollSafe(pos[0] / 4, pos[1] / 4);
 
-  
-    
- 
-  <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>    
-  
-  <script src="js/jquery.unveil.js" type="text/javascript" charset="utf-8"></script>
-  
-  
-  <script src="js/fastclick.js" type="text/javascript" charset="utf-8"></script>
-  
-  <script type="text/javascript">
-  
-  $(document).ready( function() {
-    
-    $(function() {
-        FastClick.attach(document.body);
-    });
-        
-    var init = function() {
-      localStorage["mapzoom"] = true;
-      var pos = [localStorage.getItem('ex'), localStorage.getItem('why')];
-      window.scrollTo(pos[0]/4,pos[1]/4);
-    }
-    init();
-
-    function zoomIn() {
-      localStorage["ex"] = window.scrollX;
-      localStorage["why"] = window.scrollY;
-      location.href="maps.html";
-    }
-    $('#zoom').on('click', zoomIn);
-    
-  });
-  
-  </script>
-  
+			function zoom() {
+				localStorage.setItem("ex",  cont.scrollLeft || window.scrollX);
+				localStorage.setItem("why", cont.scrollTop || window.scrollY);
+				location.href = "maps.html";
+			}
+			const zoomBtn = document.getElementById('zoom');
+			zoomBtn.addEventListener('click', zoom);
+			zoomBtn.addEventListener('tap', zoom);
+		}
+		window.addEventListener('load', init);
+	</script>
 </body>
 </html>

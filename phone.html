@@ -29,9 +29,12 @@
 
 		function init() {
 			document.body.classList.add('fade-in');
-			document.getElementById('home').onclick = function() {
-				location.href = 'home.html';
+			const homeBtn = document.getElementById('maps-home');
+			function goHome() {
+				location.href = '/home.html';
 			}
+			homeBtn.addEventListener('click', goHome);
+			homeBtn.addEventListener('tap', goHome);
 			const cont = document.getElementById('container');
 			localStorage["appCount"]++;
 			let openMailId = ''; // keeps track of which voicemail is open

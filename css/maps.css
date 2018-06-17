@@ -1,68 +1,96 @@
 body {
-  width:100%;
-  height:100%;
-  padding:0;  
-  overflow: hidden;
-  overflow-y: scroll !important;
-  -webkit-overflow-scrolling: touch;
+	width:100%;
+	height:100%;
+	padding:0;  
+	overflow: hidden;
+	-webkit-overflow-scrolling: touch;
 }
   
 div.rect {        
-  width:1024px;
-  height:700px;
-  background-color:lightblue;
-  text-align:center;
-  float:left;
-        
+	width: 1024px;
+	height: 700px;
+	background-color: lightblue;
+	text-align: center;
+	display: inline-block;
+	vertical-align: middle;
 }
 
 div.rect:after {
-  content: "image loading...";
+	content: "image loading...";
+}
+
+#splash {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	position: fixed;
+	background: white;
+}
+
+#splash img {
+	width: 240px;
+	height: 262px;
+	top: 100px;
+	position: relative;
+}
+
+#map {
+	width: 8192px; 
+	height: 6300px;
+	cursor: -webkit-grab;
+	cursor: grab;
+}
+
+#map:active {
+	cursor: -webkit-grabbing;
+	cursor: grabbing;
 }
 
 #map img {
-  display:inline;
-  padding:0;
-  margin:0;
-  width:1024px;
+	display:inline;
+	padding:0;
+	margin:0;
+	width:1024px;
 }
 
 .red {
-  background-color:rgba(255,0,150,0.5);
+	background-color:rgba(255,0,150,0.5);
 }
 
 div#ankerssq {
-  position:absolute;
-  height:70px;
-  width:70px;
-  
-  left:1850px;
-  top:1750px;
-  
+	position:absolute;
+	height:70px;
+	width:70px;
+	left:1850px;
+	top:1750px;
 }
 
 #maps-home {
-  position:fixed;
-  bottom:0px;
-  left:0;
-  right:0;
-  top:92%;
-  z-index:9;
+	position:fixed;
+	bottom:0px;
+	left:0;
+	right:0;
+	top:92%;
+	z-index:9;
 	background-color:rgba(255,255,255,0.8);
-	background-image:url(img/backbtn1.png); 
+	background-image:url(../img/backbtn1.png); 
 	background-repeat:no-repeat;
-  background-size:25%;
-  background-position:50% 0;
+	background-size:25%;
+	background-position:50% 0;
 }
+
 #zoom {
-  background-color:rgba(255,255,255,0.5);
-  position:fixed;
-  top:5px;
-  right:5px;
-  z-index:99;
-  width:20px;
-  height:20px;
+	background-color:rgba(255,255,255,0.5);
+	position:fixed;
+	top:5px;
+	right:5px;
+	z-index:99;
+	width:20px;
+	height:20px;
 }
+
 #zoom img {
-  width:100%;
+	width:100%;
 }

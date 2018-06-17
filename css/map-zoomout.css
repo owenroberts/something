@@ -1,0 +1,27 @@
+div.rect { 
+	width:256px;
+	height:175px;
+}
+
+#map {
+	width: 2048px; 
+	height: 1575px;
+}
+
+#map img {
+	width:256px;
+}
+
+#maps-home {
+	/*top:530px;*/
+	z-index:99;
+}
+
+#zoom {
+	width:40px;
+	height:40px;
+}
+
+#zoom img {
+	width:30px;
+}

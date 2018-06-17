@@ -188,9 +188,12 @@
 			const isMobile = (localStorage.getItem('isMobile') === 'true');
 			document.getElementById('container').classList.remove('dragscroll');
 			document.getElementById('months').classList.add('dragscroll');
-			document.getElementById('home').onclick = function() {
-				location.href = 'home.html';
+			const homeBtn = document.getElementById('maps-home');
+			function goHome() {
+				location.href = '/home.html';
 			}
+			homeBtn.addEventListener('click', goHome);
+			homeBtn.addEventListener('tap', goHome);
 
 			// scroll to january 2014
 
@@ -201,7 +204,6 @@
 					document.body.scrollTop = document.getElementById('jan14').offsetTop;
 				}, 50);
 			} else {
-				
 				document.getElementById('container').scrollTop = document.getElementById('jan14').offsetTop;
 			}
 
