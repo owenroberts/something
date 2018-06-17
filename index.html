@@ -23,6 +23,7 @@
 		function init() {
 			localStorage.setItem('gamestate', '0');
 			localStorage.setItem('nextLevel', false);
+			const isMobile = (localStorage.getItem('isMobile') === 'true');
 
 			for (var i = 0; i < 10; i++) {
 				localStorage.setItem(i, 'green');
@@ -31,13 +32,13 @@
 			const top = screen.height/2 - 667/2;
 			let params = `location=yes,scrollbars=no,status=no,toolbar=no,menubar=no,width=375,height=667,top=${top},left=${left}`;
 
-
-
 			function launch() {
 				launchBtn.classList.add('fade-out');
 				setTimeout( function(){
-					// location.href = "messages.html";
-					window.open('messages.html', '_blank', params);
+					if (isMobile)
+						location.href = "messages.html";
+					else						
+						window.open('messages.html', '_blank', params);
 				}, 1000);
 			};
 			const launchBtn = document.getElementById('lost');
@@ -46,15 +47,12 @@
 
 			/* pop up */
 			window.addEventListener('message', (ev) => {
-				console.log(ev);
 				if (ev.data.src == 'messages' && !ev.data.loaded) {
 					launchBtn.classList.remove('fade-out');
 					alert('Please allow popups on your browser to experience Something Ave.  Thanks :)');
 				}
 			});
-
 		}
-
 		window.addEventListener('load', init);
 	</script>
 </body>

@@ -5,7 +5,7 @@ function setDesktop() {
 
 function deviceCheck() {
 	const m = localStorage.getItem('isMobile') || mobilecheck();
-	if (m === 'false' || m === false)
+	if (m === 'false' || m === false) 
 		setDesktop();
 	if (m === true || m === false)
 		localStorage.setItem('isMobile', m);
@@ -19,3 +19,16 @@ function resizeHandler(ev) {
 	window.resizeTo(375, 667);
 }	
 window.addEventListener('resize', resizeHandler);
+
+window.lostlyFullscreen = function(elem) {
+	console.log('fullscreen', elem);
+	if (elem.requestFullscreen) {
+		elem.requestFullscreen();
+	} else if (elem.msRequestFullscreen) {
+		elem.msRequestFullscreen();
+	} else if (elem.mozRequestFullScreen) {
+		elem.mozRequestFullScreen();
+	} else if (elem.webkitRequestFullscreen) {
+		elem.webkitRequestFullscreen();
+	}
+}
