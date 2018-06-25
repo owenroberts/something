@@ -54,9 +54,13 @@
 			var level = parseInt(localStorage.getItem('gamestate'));
 			const isMobile = (localStorage.getItem('isMobile') === 'true');
 
+
 			/* pop up stuff */
 			if (!isMobile) {
-				window.opener.postMessage({'loaded': true, 'src': 'messages'}, '*');
+				if (!localStorage.getItem('popped')) {
+					localStorage.setItem('popped', 'true');
+					window.opener.postMessage({'loaded': true, 'src': 'messages'}, '*');
+				}
 			}
 
 			// appCount is apps opened
