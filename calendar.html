@@ -190,7 +190,7 @@
 			document.getElementById('months').classList.add('dragscroll');
 			const homeBtn = document.getElementById('home');
 			function goHome() {
-				location.href = '/home.html';
+				location.href = 'home.html';
 			}
 			homeBtn.addEventListener('click', goHome);
 			homeBtn.addEventListener('tap', goHome);
@@ -214,7 +214,7 @@
 			const hammer = new Hammer(day);
 			for (let i = 0; i < targets.length; i++) {
 				function openDay() {
-					dayImg.src = '/img/calendar/' + targets[i].id + '.jpg';
+					dayImg.src = 'img/calendar/' + targets[i].id + '.jpg';
 					day.style.left = 0;
 				}
 				targets[i].addEventListener('tap', openDay);

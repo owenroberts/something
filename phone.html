@@ -22,7 +22,7 @@
 		</header>
 	</div>
 
-	<div id="home" onclick="location.href='home.html'"></div>
+	<div id="home"></div>
 	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		var voicemails = ["01312014", "01252014",  "01122014", "01112014", "12202013", "12022013", "11302013", "11242013", "10312013", "10192013", "09132013", "08222013", "07032013", "05132013", "04022013","03212013", "02172013" ]; //list of voicemail names refer to file names and audio element ids
@@ -31,7 +31,7 @@
 			document.body.classList.add('fade-in');
 			const homeBtn = document.getElementById('home');
 			function goHome() {
-				location.href = '/home.html';
+				location.href = 'home.html';
 			}
 			homeBtn.addEventListener('click', goHome);
 			homeBtn.addEventListener('tap', goHome);

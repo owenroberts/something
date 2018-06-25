@@ -3,7 +3,7 @@ body, html { height:100%; }
 body { overflow:hidden; }
 
 #container {
-	background-image:url('/img/home/bkg.jpg');
+	background-image:url('img/home/bkg.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
     background-position: center center;  
