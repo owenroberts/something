@@ -74,11 +74,6 @@ div#back {
 	padding: 2em;
 }
 
-@media screen and (orientation:landscape) and (max-width: 400px) {
-	#orientation-blocker {
-		display: block;
-	}
-}
 
 .fade-visible {
 	opacity: 1;
@@ -119,4 +114,10 @@ body.desktop {
 body.desktop #home {
 /*	position: relative;
 	top: -50px;*/
+}
+
+@media screen and (orientation:landscape) and (max-width: 800px) {
+	#orientation-blocker {
+		display: block;
+	}
 }
