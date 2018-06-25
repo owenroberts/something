@@ -31,9 +31,11 @@ body.desktop {
 	border-radius: 0.5em;
 	padding:1em;
 }
-body.desktop::after {
+
+/*body.desktop::after {
 	content: 'best viewed on mobile device';
 	position: absolute;
 	bottom: 4em;
 	text-align: center;
 }
+*/
